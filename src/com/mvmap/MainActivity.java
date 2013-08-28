@@ -44,30 +44,33 @@ public class MainActivity extends SherlockActivity implements OnItemClickListene
 	private NewsListAdapter titleAdapter;
 	private int currentCategoryId;
 	private ProgressBar mProgressBar;
+	private SlidingMenu menu;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initViews();
         
-
-        // configure the SlidingMenu
-        SlidingMenu menu = new SlidingMenu(this);
+        requestCategoryList();
+    }
+    
+    protected void initViews() {
+    	 // configure the SlidingMenu
+        menu = new SlidingMenu(this);
         menu.setMode(SlidingMenu.LEFT);
         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         menu.setFadeDegree(0.35f);
         menu.setBehindOffset(200);
         menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
         menu.setMenu(R.layout.menu);
-        
-        mProgressBar = (ProgressBar) findViewById(R.id.pb);
+    	
+    	mProgressBar = (ProgressBar) findViewById(R.id.pb);
         categoryListView = (ListView) findViewById(R.id.listview);
-//        titleListView = (ListView) findViewById(R.id.pull_to_refresh_listview);
-         titleListView = (PullToRefreshListView) findViewById(R.id.pull_to_refresh_listview);
+        titleListView = (PullToRefreshListView) findViewById(R.id.pull_to_refresh_listview);
         titleListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-                // Do work to refresh the list here.
                 requestList(currentCategoryId);
             }
         });
@@ -83,9 +86,18 @@ public class MainActivity extends SherlockActivity implements OnItemClickListene
         }
         
         
-        FinalHttp http = new FinalHttp();
+        
+    }
+    
+    /*
+     * 获取分类列表
+     */
+    private void requestCategoryList() {
+    	mProgressBar.setVisibility(View.VISIBLE);
+    	FinalHttp http = new FinalHttp();
         // 取分类
         http.get("http://api.mvmap.com/item/category", new AjaxCallBack<String> () {
+        	
         	@Override
         	public void onStart() {
         		System.out.println("====> start");
@@ -93,7 +105,6 @@ public class MainActivity extends SherlockActivity implements OnItemClickListene
         	
         	@Override
         	public void onSuccess(String t) {
-//        		System.out.println("=====> success t : " + t);
         		Gson g = new Gson();
         		Map<integer, String> map = g.fromJson(t, new TypeToken<Map<Integer, String>>() {}.getType());
         		System.out.println("====>" + map);
@@ -142,16 +153,11 @@ public class MainActivity extends SherlockActivity implements OnItemClickListene
         	@Override
         	public void onSuccess(String t) {
         		mProgressBar.setVisibility(View.INVISIBLE);
-//        		System.out.println("=====> success t : " + t);
         		Gson g = new Gson();
         		titleData = g.fromJson(t, new TypeToken<ArrayList<NewsItem>>() {}.getType());
-//        		System.out.println("====>" + newsArray);
+//        		System.out.println("titleData : " + titleData);
         		for (int i = 0; i < titleData.size(); i++) {
-        			NewsItem item = titleData.get(i);
-        			System.out.println("标题:" + item.title);
-        			System.out.println("分类id:" + item.cat_id);
-        			System.out.println("id:" + item.id);
-        			System.out.println("----------------------");
+        			System.out.println(titleData.get(i).getString());
         		}
         		
         		titleAdapter = new NewsListAdapter(MainActivity.this, titleData, titleListView);
@@ -166,52 +172,21 @@ public class MainActivity extends SherlockActivity implements OnItemClickListene
         	}
         });
     }
-    
-    
-
-    
-     
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 		if (arg0 == categoryListView) {
 			// 点击菜单中的分类时
-			
-			HashMap<String, Object> da = menuData.get(arg2);
-			System.out.println("cat_id : " + da.get("cat_id") + "  title: " + da.get("title"));
+			HashMap<String, Object> da = menuData.get(position);
+//			System.out.println("cat_id : " + da.get("cat_id") + "  title: " + da.get("title"));
 			
 			requestList(da.get("cat_id"));
 		} else {
+			System.err.println("id : " + titleData.get(position).id + " title " + titleData.get(position).title);
 			// 点击列表中的某条新闻时
-			
-			FinalHttp http = new FinalHttp();
-			System.out.println("site:" + "http://api.mvmap.com/item/" + titleData.get(arg2).id);
-	        // 取分类
-	        http.get("http://api.mvmap.com/item/" + titleData.get(arg2).id, new AjaxCallBack<String> () {
-	        	@Override
-	        	public void onStart() {
-	        		System.out.println("====> start ");
-	        	}
-	        	
-	        	@Override
-	        	public void onSuccess(String t) {
-//	        		System.out.println("=====> success t : " + t);
-	        		Gson g = new Gson();
-	        		ArrayList<Map<String, String>> newsArray = g.fromJson(t, new TypeToken<ArrayList<Map<String, String>>>() {}.getType());
-//	        		System.out.println("====>" + newsArray);
-	        		System.out.println("content : " + newsArray.get(0).get("content"));
-	        		
-	        		Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-	        		intent.putExtra("content", newsArray.get(0).get("content"));
-	        		intent.putExtra("title", newsArray.get(0).get("title"));
-	        		MainActivity.this.startActivity(intent);
-	        	}
-	        	
-	        	@Override
-	        	public void onFailure(Throwable t, int errorNo, String strMsg) {
-	        		System.out.println("failure");
-	        	}
-	        });
+			Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+    		intent.putExtra("id", titleData.get(position - 1).id);
+    		MainActivity.this.startActivity(intent);
 		}
 		
 	}

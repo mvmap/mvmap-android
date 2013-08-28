@@ -8,4 +8,8 @@ public class NewsItem {
 	public String img;
 	public String title;
 	public String content;
+	
+	public String getString() {
+		return "[ title : " + title + "] [ id : " + id + " ]";
+	}
 }
