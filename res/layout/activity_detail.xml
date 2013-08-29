@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/root"
     android:orientation="vertical" >
 
     <ProgressBar
@@ -27,7 +27,7 @@
             <TextView
                 android:id="@+id/txt_title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dip"
                 android:layout_margin="5dip"
                 android:gravity="center"
                 android:textSize="20sp" />
@@ -37,10 +37,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dip" />
+
+            <TextView
+                android:id="@+id/txt_src"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 
     <LinearLayout
+        android:background="@drawable/item_bg_2"
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

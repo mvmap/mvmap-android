@@ -1166,16 +1166,20 @@ containing a value of this type.
         public static final int abs__textfield_searchview_right_holo_dark=0x7f02006d;
         public static final int abs__textfield_searchview_right_holo_light=0x7f02006e;
         public static final int abs__toast_frame=0x7f02006f;
-        public static final int default_ptr_flip=0x7f020070;
-        public static final int default_ptr_rotate=0x7f020071;
-        public static final int ic_launcher=0x7f020072;
-        public static final int indicator_arrow=0x7f020073;
-        public static final int indicator_bg_bottom=0x7f020074;
-        public static final int indicator_bg_top=0x7f020075;
-        public static final int menu_active=0x7f020076;
-        public static final int menu_normal=0x7f020077;
-        public static final int news_list_item_bg=0x7f020078;
-        public static final int selector_menu_bg=0x7f020079;
+        public static final int actionbar_bg=0x7f020070;
+        public static final int default_ptr_flip=0x7f020071;
+        public static final int default_ptr_rotate=0x7f020072;
+        public static final int ic_launcher=0x7f020073;
+        public static final int indicator_arrow=0x7f020074;
+        public static final int indicator_bg_bottom=0x7f020075;
+        public static final int indicator_bg_top=0x7f020076;
+        public static final int item_bg=0x7f020077;
+        public static final int item_bg_2=0x7f020078;
+        public static final int main_bg=0x7f020079;
+        public static final int menu_active=0x7f02007a;
+        public static final int menu_normal=0x7f02007b;
+        public static final int news_list_item_bg=0x7f02007c;
+        public static final int selector_menu_bg=0x7f02007d;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f050031;
@@ -1217,21 +1221,21 @@ containing a value of this type.
         public static final int abs__textButton=0x7f050024;
         public static final int abs__title=0x7f05002c;
         public static final int abs__up=0x7f05001c;
-        public static final int action_settings=0x7f050054;
+        public static final int action_settings=0x7f050055;
         public static final int both=0x7f050008;
-        public static final int btn_back=0x7f050049;
+        public static final int btn_back=0x7f05004a;
         public static final int disableHome=0x7f05001a;
         public static final int disabled=0x7f050005;
         public static final int edit_query=0x7f050037;
-        public static final int fl_inner=0x7f05004e;
+        public static final int fl_inner=0x7f05004f;
         public static final int flip=0x7f05000d;
         public static final int fullscreen=0x7f050003;
         public static final int gridview=0x7f05000e;
         public static final int homeAsUp=0x7f050017;
-        public static final int img=0x7f05004b;
+        public static final int img=0x7f05004c;
         public static final int left=0x7f050000;
         public static final int listMode=0x7f050013;
-        public static final int listview=0x7f05004d;
+        public static final int listview=0x7f05004e;
         public static final int ll_bottom=0x7f050046;
         public static final int manualOnly=0x7f050009;
         public static final int margin=0x7f050002;
@@ -1241,11 +1245,11 @@ containing a value of this type.
         public static final int pullFromEnd=0x7f050007;
         public static final int pullFromStart=0x7f050006;
         public static final int pullUpFromBottom=0x7f05000b;
-        public static final int pull_to_refresh_image=0x7f05004f;
-        public static final int pull_to_refresh_listview=0x7f05004a;
-        public static final int pull_to_refresh_progress=0x7f050050;
-        public static final int pull_to_refresh_sub_text=0x7f050052;
-        public static final int pull_to_refresh_text=0x7f050051;
+        public static final int pull_to_refresh_image=0x7f050050;
+        public static final int pull_to_refresh_listview=0x7f05004b;
+        public static final int pull_to_refresh_progress=0x7f050051;
+        public static final int pull_to_refresh_sub_text=0x7f050053;
+        public static final int pull_to_refresh_text=0x7f050052;
         public static final int right=0x7f050001;
         public static final int root=0x7f050043;
         public static final int rotate=0x7f05000c;
@@ -1255,9 +1259,10 @@ containing a value of this type.
         public static final int showHome=0x7f050016;
         public static final int showTitle=0x7f050018;
         public static final int sl_content=0x7f050045;
-        public static final int slidingmenumain=0x7f050053;
+        public static final int slidingmenumain=0x7f050054;
         public static final int tabMode=0x7f050014;
-        public static final int txt_time=0x7f05004c;
+        public static final int txt_src=0x7f050049;
+        public static final int txt_time=0x7f05004d;
         public static final int txt_title=0x7f050047;
         public static final int useLogo=0x7f050015;
         public static final int web_view=0x7f050048;
@@ -1425,6 +1430,7 @@ containing a value of this type.
         public static final int Theme_Sherlock_Light_DarkActionBar=0x7f0b0056;
         public static final int Theme_Sherlock_Light_NoActionBar=0x7f0b0058;
         public static final int Theme_Sherlock_NoActionBar=0x7f0b0057;
+        public static final int Theme_Styled=0x7f0b005b;
         public static final int Widget=0x7f0b0000;
         public static final int Widget_Sherlock_ActionBar=0x7f0b0002;
         public static final int Widget_Sherlock_ActionBar_Solid=0x7f0b0003;
@@ -1472,6 +1478,7 @@ containing a value of this type.
         public static final int Widget_Sherlock_SearchAutoCompleteTextView=0x7f0b0034;
         public static final int Widget_Sherlock_Spinner_DropDown_ActionBar=0x7f0b0024;
         public static final int Widget_Sherlock_TextView_SpinnerItem=0x7f0b0032;
+        public static final int Widget_Styled_ActionBar=0x7f0b005c;
     }
     public static final class styleable {
         /** Attributes that can be used with a PullToRefresh.

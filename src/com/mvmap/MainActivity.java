@@ -182,7 +182,7 @@ public class MainActivity extends SherlockActivity implements OnItemClickListene
 			
 			requestList(da.get("cat_id"));
 		} else {
-			System.err.println("id : " + titleData.get(position).id + " title " + titleData.get(position).title);
+//			System.err.println("id : " + titleData.get(position - 1).id + " title " + titleData.get(position - 1).title);
 			// 点击列表中的某条新闻时
 			Intent intent = new Intent(MainActivity.this, DetailActivity.class);
     		intent.putExtra("id", titleData.get(position - 1).id);

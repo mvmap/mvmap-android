@@ -1,5 +1,6 @@
 package com.mvmap;
 
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Map;
@@ -9,12 +10,18 @@ import net.tsz.afinal.http.AjaxCallBack;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mvmap.loader.AsyncImageLoader;
+import com.mvmap.model.NewsDetail;
 
 import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebSettings;
@@ -31,6 +38,7 @@ public class DetailActivity extends Activity implements OnClickListener {
 	final String mimeType = "text/html";  
     final String encoding = "utf-8"; 
     private TextView mTitleTextView;
+    private TextView mSrcTextView;
     private Button mButtonBack;
     private WebView mWebView;
     private ProgressBar mProgressBar;
@@ -39,14 +47,41 @@ public class DetailActivity extends Activity implements OnClickListener {
     private String titleString;
     
     private View mRootViewLayout;
+    private NewsDetail mNewsDetail;
     
     private Handler mHandler = new Handler() {
     	public void handleMessage(android.os.Message msg) {
     		switch (msg.what) {
 			case 1:
-				mTitleTextView.setText(titleString);
+				if (mNewsDetail == null) {
+					break;
+				}
+				
+				mTitleTextView.setText(mNewsDetail.title);
+				
+				
+				new Thread() {
+					public void run() {
+						Drawable drawable = null;
+						try {
+							drawable = AsyncImageLoader.loadImageFromUrl(mNewsDetail.img);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						Message msg = new Message();
+						msg.what = 2;
+						msg.obj = drawable;
+						mHandler.sendMessage(msg);
+					};
+				}.start();
+				
+				String htmlLinkText = "<a href=\"" + mNewsDetail.fr + "\"><u>本文来自：" + mNewsDetail.feed_name + "</u></a>";  
+				mSrcTextView.setText(Html.fromHtml(htmlLinkText));  
+				mSrcTextView.setMovementMethod(LinkMovementMethod.getInstance());
+
 				try {  
-					mWebView.loadDataWithBaseURL(null, contentString, mimeType, encoding, null);
+					mWebView.loadDataWithBaseURL(null, mNewsDetail.content, mimeType, encoding, null);
 		        } catch (Exception ex) {  
 		            ex.printStackTrace();  
 		        }  
@@ -54,12 +89,19 @@ public class DetailActivity extends Activity implements OnClickListener {
 				mRootViewLayout.invalidate();
 				mProgressBar.setVisibility(View.INVISIBLE);
 				break;
+			case 2: {
+				Drawable d = (Drawable) msg.obj;
+				mTitleTextView.setBackgroundDrawable(d);
+				break;
+			}
 
 			default:
 				break;
 			}
     	};
     };
+    
+    
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +122,7 @@ public class DetailActivity extends Activity implements OnClickListener {
 		mButtonBack.setOnClickListener(this);
 		
 		mTitleTextView = (TextView) findViewById(R.id.txt_title);
+		mSrcTextView = (TextView) findViewById(R.id.txt_src);
 		mProgressBar = (ProgressBar) findViewById(R.id.pb);
 		
 		mWebView = (WebView) findViewById(R.id.web_view);
@@ -103,10 +146,15 @@ public class DetailActivity extends Activity implements OnClickListener {
         	@Override
         	public void onSuccess(String t) {
         		Gson g = new Gson();
-        		ArrayList<Map<String, String>> newsArray = g.fromJson(t, new TypeToken<ArrayList<Map<String, String>>>() {}.getType());
-        		System.err.println("title : " + newsArray.get(0).get("title"));
-        		contentString = newsArray.get(0).get("content");
-        		titleString = newsArray.get(0).get("title");
+        		ArrayList<NewsDetail> newsDetails = g.fromJson(t, new TypeToken<ArrayList<NewsDetail>>() {}.getType());
+        		mNewsDetail = newsDetails.get(0);
+//        		String string = "mNewsDetail : " + mNewsDetail.toString();
+//				System.out.println(string);
+        		
+//        		ArrayList<Map<String, String>> newsArray = g.fromJson(t, new TypeToken<ArrayList<Map<String, String>>>() {}.getType());
+////        		System.err.println("title : " + newsArray.get(0).get("title"));
+//        		contentString = newsArray.get(0).get("content");
+//        		titleString = newsArray.get(0).get("title");
         		mHandler.sendEmptyMessage(1);
         		
         	}

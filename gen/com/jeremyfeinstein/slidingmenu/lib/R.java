@@ -9,7 +9,7 @@ package com.jeremyfeinstein.slidingmenu.lib;
 public final class R {
 	public static final class id {
 		public static final int fullscreen = 0x7f050003;
-		public static final int slidingmenumain = 0x7f050053;
+		public static final int slidingmenumain = 0x7f050054;
 		public static final int selected_view = 0x7f050004;
 		public static final int left = 0x7f050000;
 		public static final int margin = 0x7f050002;
