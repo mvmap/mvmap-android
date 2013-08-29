@@ -1177,9 +1177,10 @@ containing a value of this type.
         public static final int item_bg_2=0x7f020078;
         public static final int main_bg=0x7f020079;
         public static final int menu_active=0x7f02007a;
-        public static final int menu_normal=0x7f02007b;
-        public static final int news_list_item_bg=0x7f02007c;
-        public static final int selector_menu_bg=0x7f02007d;
+        public static final int menu_item_normal=0x7f02007b;
+        public static final int menu_normal=0x7f02007c;
+        public static final int news_list_item_bg=0x7f02007d;
+        public static final int selector_menu_bg=0x7f02007e;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f050031;
@@ -1221,13 +1222,13 @@ containing a value of this type.
         public static final int abs__textButton=0x7f050024;
         public static final int abs__title=0x7f05002c;
         public static final int abs__up=0x7f05001c;
-        public static final int action_settings=0x7f050055;
+        public static final int action_settings=0x7f050057;
         public static final int both=0x7f050008;
         public static final int btn_back=0x7f05004a;
         public static final int disableHome=0x7f05001a;
         public static final int disabled=0x7f050005;
         public static final int edit_query=0x7f050037;
-        public static final int fl_inner=0x7f05004f;
+        public static final int fl_inner=0x7f050051;
         public static final int flip=0x7f05000d;
         public static final int fullscreen=0x7f050003;
         public static final int gridview=0x7f05000e;
@@ -1245,11 +1246,11 @@ containing a value of this type.
         public static final int pullFromEnd=0x7f050007;
         public static final int pullFromStart=0x7f050006;
         public static final int pullUpFromBottom=0x7f05000b;
-        public static final int pull_to_refresh_image=0x7f050050;
+        public static final int pull_to_refresh_image=0x7f050052;
         public static final int pull_to_refresh_listview=0x7f05004b;
-        public static final int pull_to_refresh_progress=0x7f050051;
-        public static final int pull_to_refresh_sub_text=0x7f050053;
-        public static final int pull_to_refresh_text=0x7f050052;
+        public static final int pull_to_refresh_progress=0x7f050053;
+        public static final int pull_to_refresh_sub_text=0x7f050055;
+        public static final int pull_to_refresh_text=0x7f050054;
         public static final int right=0x7f050001;
         public static final int root=0x7f050043;
         public static final int rotate=0x7f05000c;
@@ -1259,11 +1260,13 @@ containing a value of this type.
         public static final int showHome=0x7f050016;
         public static final int showTitle=0x7f050018;
         public static final int sl_content=0x7f050045;
-        public static final int slidingmenumain=0x7f050054;
+        public static final int slidingmenumain=0x7f050056;
         public static final int tabMode=0x7f050014;
+        public static final int txt_about=0x7f05004f;
         public static final int txt_src=0x7f050049;
         public static final int txt_time=0x7f05004d;
         public static final int txt_title=0x7f050047;
+        public static final int txt_xx=0x7f050050;
         public static final int useLogo=0x7f050015;
         public static final int web_view=0x7f050048;
         public static final int webview=0x7f05000f;
@@ -1478,6 +1481,8 @@ containing a value of this type.
         public static final int Widget_Sherlock_SearchAutoCompleteTextView=0x7f0b0034;
         public static final int Widget_Sherlock_Spinner_DropDown_ActionBar=0x7f0b0024;
         public static final int Widget_Sherlock_TextView_SpinnerItem=0x7f0b0032;
+        /**  <item name="android:backgroundSplit">@drawable/item_bg_2</item> 
+         */
         public static final int Widget_Styled_ActionBar=0x7f0b005c;
     }
     public static final class styleable {
