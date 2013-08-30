@@ -69,7 +69,7 @@ public class NewsListAdapter extends BaseAdapter {
 		TextView titleTextView = (TextView) convertView.findViewById(R.id.txt_title);
 		titleTextView.setText(data.get(position).title);
 		TextView feedTextView = (TextView) convertView.findViewById(R.id.txt_time);
-		feedTextView.setText("本文来自:" + data.get(position).feed_name);
+		feedTextView.setText(data.get(position).feed_name);
 		
 		asyncImageLoader.loadImage(position, data.get(position).img, imageLoadListener);
 		return convertView;
