@@ -25,20 +25,21 @@
             android:orientation="vertical" >
 
             <TextView
-                android:textStyle="bold"
                 android:id="@+id/txt_title"
                 android:layout_width="match_parent"
                 android:layout_height="150dip"
                 android:gravity="left|bottom"
-                android:textSize="15sp" />
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_margin="5dip"
                 android:layout_width="match_parent"
                 android:layout_height="2dip"
+                android:layout_margin="5dip"
                 android:layout_marginLeft="5dip"
                 android:layout_marginRight="5dip"
-                android:background="#000000" />
+                android:background="#FF3300" />
 
             <WebView
                 android:id="@+id/web_view"
@@ -49,7 +50,9 @@
             <TextView
                 android:id="@+id/txt_src"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" />
+
         </LinearLayout>
     </ScrollView>
 

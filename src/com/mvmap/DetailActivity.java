@@ -76,7 +76,7 @@ public class DetailActivity extends Activity implements OnClickListener {
 					};
 				}.start();
 				
-				String htmlLinkText = "<a href=\"" + mNewsDetail.fr + "\"><u>本文来自：" + mNewsDetail.feed_name + "</u></a>";  
+				String htmlLinkText = "<a href=\"" + mNewsDetail.fr + "\"><u>阅读原文</u></a>";  
 				mSrcTextView.setText(Html.fromHtml(htmlLinkText));  
 				mSrcTextView.setMovementMethod(LinkMovementMethod.getInstance());
 
