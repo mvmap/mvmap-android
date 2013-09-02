@@ -1179,8 +1179,10 @@ containing a value of this type.
         public static final int menu_active=0x7f02007a;
         public static final int menu_item_normal=0x7f02007b;
         public static final int menu_normal=0x7f02007c;
-        public static final int news_list_item_bg=0x7f02007d;
-        public static final int selector_menu_bg=0x7f02007e;
+        public static final int menu_refresh=0x7f02007d;
+        public static final int menu_refresh_highlight=0x7f02007e;
+        public static final int news_list_item_bg=0x7f02007f;
+        public static final int selector_menu_bg=0x7f020080;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f050031;

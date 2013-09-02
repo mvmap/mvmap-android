@@ -296,8 +296,10 @@ int drawable main_bg 0x7f020079
 int drawable menu_active 0x7f02007a
 int drawable menu_item_normal 0x7f02007b
 int drawable menu_normal 0x7f02007c
-int drawable news_list_item_bg 0x7f02007d
-int drawable selector_menu_bg 0x7f02007e
+int drawable menu_refresh 0x7f02007d
+int drawable menu_refresh_highlight 0x7f02007e
+int drawable news_list_item_bg 0x7f02007f
+int drawable selector_menu_bg 0x7f020080
 int id abs__action_bar 0x7f050031
 int id abs__action_bar_container 0x7f050030
 int id abs__action_bar_subtitle 0x7f050022
