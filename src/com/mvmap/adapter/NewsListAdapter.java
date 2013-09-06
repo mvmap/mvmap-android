@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.mvmap.R;
+import com.mvmap.news.R;
 import com.mvmap.loader.AsyncImageLoader;
 import com.mvmap.model.NewsItem;
 

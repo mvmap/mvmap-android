@@ -1,4 +1,4 @@
-package com.mvmap;
+package com.mvmap.activity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +16,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
+import com.mvmap.news.R;
 import com.mvmap.adapter.NewsListAdapter;
 import com.mvmap.model.NewsItem;
 

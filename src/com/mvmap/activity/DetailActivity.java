@@ -1,4 +1,4 @@
-package com.mvmap;
+package com.mvmap.activity;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -10,6 +10,7 @@ import net.tsz.afinal.http.AjaxCallBack;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mvmap.news.R;
 import com.mvmap.loader.AsyncImageLoader;
 import com.mvmap.model.NewsDetail;
 

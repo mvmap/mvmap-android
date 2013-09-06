@@ -10,7 +10,7 @@ import java.lang.ref.SoftReference;
 import java.net.URL;  
 import java.util.HashMap;  
 
-import com.mvmap.R.id;
+import com.mvmap.news.R.id;
 import com.mvmap.model.MD5;
   
 import android.graphics.drawable.Drawable;  
