@@ -16,7 +16,7 @@
     
     <meta-data android:name="BaiduMobAd_CHANNEL" android:value="Baidu Market" /> 
     <!-- 您从百度网站获取的 APP KEY -->
-	<meta-data android:name="BaiduMobAd_STAT_ID" android:value="97bf25c3bd" />
+	<meta-data android:name="BaiduMobAd_STAT_ID" android:value="cca32c4ac0" />
 
     <application
         android:allowBackup="true"
