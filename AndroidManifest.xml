@@ -57,8 +57,9 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.Styled" >
         <activity
-            android:name="com.mvmap.activity.MainActivity"
-            android:label="@string/app_name" >
+            android:name="com.mvmap.activity.SplashActivity"
+            android:label="@string/title_activity_splash"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -66,9 +67,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.mvmap.activity.SplashActivity"
-            android:label="@string/title_activity_splash"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            android:name="com.mvmap.activity.MainActivity"
+            android:label="@string/app_name">
         </activity>
         
         <activity
