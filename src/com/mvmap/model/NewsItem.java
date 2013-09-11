@@ -1,7 +1,5 @@
 package com.mvmap.model;
 
-import android.R.integer;
-
 public class NewsItem {
 	public int cat_id;
 	public int id;

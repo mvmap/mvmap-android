@@ -1,8 +1,6 @@
 package com.mvmap.adapter;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.mvmap.news.R;
 import com.mvmap.loader.AsyncImageLoader;
@@ -11,13 +9,11 @@ import com.mvmap.model.NewsItem;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
-import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 public class NewsListAdapter extends BaseAdapter {

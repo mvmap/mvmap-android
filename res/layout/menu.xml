@@ -30,13 +30,13 @@
             android:text="关于" />
 
         <Button
-            android:id="@+id/txt_xx"
+            android:id="@+id/txt_test"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
             android:layout_weight="1"
             android:background="@drawable/selector_menu_bg"
-            android:text="XX" />
+            android:text="测试" />
     </LinearLayout>
 
 </LinearLayout>
