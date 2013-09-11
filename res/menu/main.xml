@@ -4,6 +4,14 @@
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/action_settings"/>
-
+        android:title="@string/action_settings" />
+    
+    <item
+        android:id="@+id/more"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/menu_more"
+        android:title="@string/more"
+        android:titleCondensed="@string/more">
+    </item>
+    
 </menu>

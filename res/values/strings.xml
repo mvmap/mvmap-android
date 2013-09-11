@@ -7,5 +7,7 @@
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="title_activity_about">AboutActivity</string>
+    
+    <string name="more">more</string>
 
 </resources>

@@ -9,6 +9,7 @@ import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -33,6 +34,14 @@ import android.widget.SimpleAdapter;
 
 
 public class MainActivity extends SherlockActivity implements OnItemClickListener {
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.main, menu);
+        return true;
+		//return super.onCreateOptionsMenu(menu);
+	}
+
 	private static final int NUM = 20;
 	private ListView categoryListView;
 	private PullToRefreshListView titleListView;
