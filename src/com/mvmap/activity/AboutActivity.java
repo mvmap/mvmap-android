@@ -1,12 +1,10 @@
 package com.mvmap.activity;
 
-import com.mvmap.news.R;
-import com.mvmap.news.R.layout;
-import com.mvmap.news.R.menu;
-
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
+
+import com.mvmap.news.R;
 
 public class AboutActivity extends Activity {
 

@@ -1,36 +1,47 @@
 package com.mvmap.adapter;
 
 import java.util.ArrayList;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.mvmap.news.R;
-import com.mvmap.loader.AsyncImageLoader;
-import com.mvmap.model.NewsItem;
 
+import net.tsz.afinal.FinalBitmap;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.mvmap.loader.AsyncImageLoader;
+import com.mvmap.model.NewsItem;
+import com.mvmap.news.R;
 
 public class NewsListAdapter extends BaseAdapter {
 	private ArrayList<NewsItem> data;
 	private Context context;
 	private LayoutInflater inflater;
 	private PullToRefreshListView mListView;
-	private AsyncImageLoader asyncImageLoader;
+//	private AsyncImageLoader asyncImageLoader;
+	
+	private FinalBitmap fb;
 	
 	public NewsListAdapter(Context context, ArrayList<NewsItem> data, PullToRefreshListView titleListView) {
 		this.context = context;
 		this.data = data;
 		this.mListView = titleListView;
 		inflater = LayoutInflater.from(context);
-		asyncImageLoader = new AsyncImageLoader();
-		mListView.setOnScrollListener(onScrollListener);
-		loadImage();
+//		asyncImageLoader = new AsyncImageLoader();
+//		mListView.setOnScrollListener(onScrollListener);
+		fb = FinalBitmap.create(context);
+//		loadImage();
+	}
+	
+	public void clear(){
+		if(data != null){
+			data.clear();
+			notifyDataSetChanged();
+		}
 	}
 
 	@Override
@@ -51,23 +62,37 @@ public class NewsListAdapter extends BaseAdapter {
 		return arg0;
 	}
 
+	static class ViewHolder {
+		ImageView imageView;
+		TextView titleTextView;
+		TextView feedTextView;
+	}
+	
 	@Override
 	public View getView(int position, View convertView, ViewGroup arg2) {
+		 ViewHolder holder;
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.list_item, null);
+			holder = new ViewHolder();
+			holder.imageView = (ImageView) convertView.findViewById(R.id.img);
+			holder.titleTextView = (TextView) convertView.findViewById(R.id.txt_title);
+			holder.feedTextView = (TextView) convertView.findViewById(R.id.txt_time);
+			convertView.setTag(holder);
+		}else{
+			holder = (ViewHolder) convertView.getTag();
 		}
-		convertView.setTag(position);
-		ImageView imageView = (ImageView) convertView.findViewById(R.id.img);
-		imageView.setImageDrawable(null);
+//		convertView.setTag(position);
+		holder.imageView = (ImageView) convertView.findViewById(R.id.img);
+		holder.imageView.setImageDrawable(null);
 		System.out.println("url : " + data.get(position).img);
-//		AsyncImageLoader.setImageViewFromUrl(data.get(position).img, imageView);
 		
-		TextView titleTextView = (TextView) convertView.findViewById(R.id.txt_title);
-		titleTextView.setText(data.get(position).title);
-		TextView feedTextView = (TextView) convertView.findViewById(R.id.txt_time);
-		feedTextView.setText(data.get(position).feed_name);
+		holder.titleTextView = (TextView) convertView.findViewById(R.id.txt_title);
+		holder.titleTextView.setText(data.get(position).title);
+		holder.feedTextView = (TextView) convertView.findViewById(R.id.txt_time);
+		holder.feedTextView.setText(data.get(position).feed_name);
 		
-		asyncImageLoader.loadImage(position, data.get(position).img, imageLoadListener);
+		fb.display(holder.imageView, data.get(position).img);
+		//asyncImageLoader.loadImage(position, data.get(position).img, imageLoadListener);
 		return convertView;
 	}
 
@@ -99,16 +124,16 @@ public class NewsListAdapter extends BaseAdapter {
 	      
 	};  
 	
-	public void loadImage(){  
+//	public void loadImage(){  
 //	    int start = mListView.getFirstVisiblePosition();  
 //	    int end = mListView.getLastVisiblePosition();  
 //	    if(end >= getCount()){  
 //	        end = getCount() -1;  
 //	    }  
-	    asyncImageLoader.setLoadLimit(0, data.size());  
-	    asyncImageLoader.unlock();  
-	} 
-	
+//	    asyncImageLoader.setLoadLimit(0, data.size());  
+//	    asyncImageLoader.unlock();  
+//	} 
+	/*
 	AbsListView.OnScrollListener onScrollListener = new AbsListView.OnScrollListener() {  
         
         @Override  
@@ -137,4 +162,5 @@ public class NewsListAdapter extends BaseAdapter {
               
         }  
     }; 
+    */
 }

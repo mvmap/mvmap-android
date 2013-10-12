@@ -1,14 +1,12 @@
 package com.mvmap.activity;
 
-import com.mvmap.news.R;
-import com.mvmap.news.R.layout;
-import com.mvmap.news.R.menu;
-
-import android.os.Bundle;
-import android.os.Handler;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
+
+import com.mvmap.news.R;
 
 public class SplashActivity extends Activity {
 

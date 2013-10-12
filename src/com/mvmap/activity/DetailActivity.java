@@ -2,15 +2,9 @@ package com.mvmap.activity;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.mvmap.news.R;
-import com.mvmap.loader.AsyncImageLoader;
-import com.mvmap.model.NewsDetail;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -27,6 +21,12 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.mvmap.loader.AsyncImageLoader;
+import com.mvmap.model.NewsDetail;
+import com.mvmap.news.R;
 
 public class DetailActivity extends Activity implements OnClickListener {
 	

@@ -7,30 +7,28 @@ import java.util.Map;
 
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
+import android.R.integer;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.SimpleAdapter;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-
-import com.mvmap.news.R;
 import com.mvmap.adapter.NewsListAdapter;
 import com.mvmap.model.NewsItem;
-
-import android.os.Bundle;
-import android.R.integer;
-import android.content.Intent;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import com.mvmap.news.R;
 
 
 public class MainActivity extends SherlockActivity implements OnItemClickListener {
@@ -41,7 +39,8 @@ public class MainActivity extends SherlockActivity implements OnItemClickListene
         return true;
 		//return super.onCreateOptionsMenu(menu);
 	}
-
+	
+	
 	private static final int NUM = 20;
 	private ListView categoryListView;
 	private PullToRefreshListView titleListView;
@@ -53,7 +52,9 @@ public class MainActivity extends SherlockActivity implements OnItemClickListene
 	private ProgressBar mProgressBar;
 	private SlidingMenu menu;
 	
-    @Override
+	private int		start;
+	
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -95,11 +96,22 @@ public class MainActivity extends SherlockActivity implements OnItemClickListene
     	mProgressBar = (ProgressBar) findViewById(R.id.pb);
         categoryListView = (ListView) findViewById(R.id.listview);
         titleListView = (PullToRefreshListView) findViewById(R.id.pull_to_refresh_listview);
-        titleListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
-            @Override
-            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-                requestList(currentCategoryId);
-            }
+        titleListView.setOnRefreshListener(new OnRefreshListener2<ListView>() {
+
+			@Override
+			public void onPullDownToRefresh(
+					PullToRefreshBase<ListView> refreshView) {
+				start = 0;
+				titleAdapter.clear();
+				requestList(currentCategoryId);
+			}
+
+			@Override
+			public void onPullUpToRefresh(
+					PullToRefreshBase<ListView> refreshView) {
+				requestList(currentCategoryId);
+			}
+           
         });
         
         categoryListView.setOnItemClickListener(this);
@@ -168,7 +180,8 @@ public class MainActivity extends SherlockActivity implements OnItemClickListene
     	
     	FinalHttp http = new FinalHttp();
         // 取分类
-        http.get("http://api.mvmap.com/item?cat_id=" + cat_id + "&num=" + NUM, new AjaxCallBack<String> () {
+        http.get("http://api.mvmap.com/item?cat_id=" + cat_id + "&num=" + NUM + "&start="+start, 
+        		new AjaxCallBack<String> () {
         	@Override
         	public void onStart() {
         		System.out.println("====> start");
@@ -188,6 +201,7 @@ public class MainActivity extends SherlockActivity implements OnItemClickListene
         		titleListView.setAdapter(titleAdapter);
         		
         		titleListView.onRefreshComplete();
+        		start+=10;
         	}
         	
         	@Override

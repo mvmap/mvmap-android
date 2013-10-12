@@ -1,20 +1,20 @@
 package com.mvmap.loader;
 
-import java.io.DataInputStream;  
-import java.io.File;  
-import java.io.FileInputStream;  
-import java.io.FileOutputStream;  
-import java.io.IOException;  
-import java.io.InputStream;  
-import java.lang.ref.SoftReference;  
-import java.net.URL;  
-import java.util.HashMap;  
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.ref.SoftReference;
+import java.net.URL;
+import java.util.HashMap;
+
+import android.graphics.drawable.Drawable;
+import android.os.Environment;
+import android.os.Handler;
 
 import com.mvmap.model.MD5;
-  
-import android.graphics.drawable.Drawable;  
-import android.os.Environment;  
-import android.os.Handler;  
   
 public class AsyncImageLoader {  
   

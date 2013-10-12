@@ -1,7 +1,7 @@
 package com.mvmap.model;  
   
-import java.security.MessageDigest;  
-import java.security.NoSuchAlgorithmException;  
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 /** 
  * 对外提供getMD5(String)方法 
  * @author wusj

@@ -2,41 +2,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    
     tools:context=".MainActivity" >
 
     <!-- Here is any view that will represent your side menu. Don't forget to provide width! -->
-    <View 
+
+    <View
         android:layout_width="300dp"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
 
     <!-- And here is your main layout -->
+
     <RelativeLayout
-        android:background="@drawable/main_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:background="@drawable/main_bg" >
+
         <com.handmark.pulltorefresh.library.PullToRefreshListView
+            xmlns:ptr="http://schemas.android.com/apk/res-auto"
             android:id="@+id/pull_to_refresh_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="#00000000"
             android:background="#00000000"
+            android:divider="#00000000"
             android:dividerHeight="10dp"
             android:paddingLeft="5dip"
             android:paddingRight="5dip"
-            android:scrollbars="none"
-            />
-        
-        <ProgressBar 
+            ptr:ptrMode="both" />
+
+        <ProgressBar
+            android:id="@+id/pb"
+            style="@android:style/Widget.ProgressBar"
             android:layout_width="50dip"
             android:layout_height="50dip"
-            android:id="@+id/pb"
             android:layout_centerInParent="true"
-            style="@android:style/Widget.ProgressBar"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
     </RelativeLayout>
 
 </RelativeLayout>
