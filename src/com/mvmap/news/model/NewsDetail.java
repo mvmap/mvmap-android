@@ -1,4 +1,4 @@
-package com.mvmap.model;
+package com.mvmap.news.model;
 
 public class NewsDetail extends BaseModel {
 	public String fr;

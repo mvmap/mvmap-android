@@ -1,12 +1,12 @@
-package com.mvmap.adapter;
+package com.mvmap.news.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.mvmap.R;
-import com.mvmap.loader.AsyncImageLoader;
-import com.mvmap.model.NewsItem;
+import com.mvmap.news.R;
+import com.mvmap.news.loader.AsyncImageLoader;
+import com.mvmap.news.model.NewsItem;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -21,20 +21,33 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class NewsListAdapter extends BaseAdapter {
-	private ArrayList<NewsItem> data;
+	private List<NewsItem> data;
 	private Context context;
 	private LayoutInflater inflater;
 	private PullToRefreshListView mListView;
 	private AsyncImageLoader asyncImageLoader;
 	
-	public NewsListAdapter(Context context, ArrayList<NewsItem> data, PullToRefreshListView titleListView) {
+	public NewsListAdapter(Context context, List<NewsItem> data, PullToRefreshListView titleListView) {
 		this.context = context;
 		this.data = data;
+		if (this.data == null) {
+			this.data = new ArrayList<NewsItem>();
+		}
+		
 		this.mListView = titleListView;
 		inflater = LayoutInflater.from(context);
 		asyncImageLoader = new AsyncImageLoader();
 		mListView.setOnScrollListener(onScrollListener);
 		loadImage();
+	}
+	
+	public void setData(List<NewsItem> data) {
+		this.data = data;
+		notifyDataSetChanged();
+	}
+	
+	public void updateListView(PullToRefreshListView listView) {
+		this.mListView = listView;
 	}
 
 	@Override
@@ -63,7 +76,7 @@ public class NewsListAdapter extends BaseAdapter {
 		convertView.setTag(position);
 		ImageView imageView = (ImageView) convertView.findViewById(R.id.img);
 		imageView.setImageDrawable(null);
-		System.out.println("url : " + data.get(position).img);
+//		System.out.println("url : " + data.get(position).img);
 //		AsyncImageLoader.setImageViewFromUrl(data.get(position).img, imageView);
 		
 		TextView titleTextView = (TextView) convertView.findViewById(R.id.txt_title);
@@ -80,7 +93,7 @@ public class NewsListAdapter extends BaseAdapter {
 	    @Override  
 	    public void onImageLoad(Integer t, Drawable drawable) {  
 	        //BookModel model = (BookModel) getItem(t);  
-	    	System.out.println("加载图片成功");
+//	    	System.out.println("加载图片成功");
 	        View view = mListView.findViewWithTag(t);  
 	        if(view != null){  
 	            ImageView iv = (ImageView) view.findViewById(R.id.img);  

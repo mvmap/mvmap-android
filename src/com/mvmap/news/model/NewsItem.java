@@ -1,4 +1,4 @@
-package com.mvmap.model;
+package com.mvmap.news.model;
 
 import android.R.integer;
 

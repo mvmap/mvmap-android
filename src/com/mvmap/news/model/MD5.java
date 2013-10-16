@@ -1,4 +1,4 @@
-package com.mvmap.model;  
+package com.mvmap.news.model;  
   
 import java.security.MessageDigest;  
 import java.security.NoSuchAlgorithmException;  

@@ -1,4 +1,4 @@
-package com.mvmap;
+package com.mvmap.news.activity;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -10,8 +10,9 @@ import net.tsz.afinal.http.AjaxCallBack;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.mvmap.loader.AsyncImageLoader;
-import com.mvmap.model.NewsDetail;
+import com.mvmap.news.R;
+import com.mvmap.news.loader.AsyncImageLoader;
+import com.mvmap.news.model.NewsDetail;
 
 import android.R.integer;
 import android.app.Activity;
@@ -28,18 +29,19 @@ import android.webkit.WebSettings;
 import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class DetailActivity extends Activity implements OnClickListener {
+public class DetailActivity extends BaseActivity implements OnClickListener {
 	
 	public static int MSG_UPDATE_CONTENT = 1;
 	final String mimeType = "text/html";  
     final String encoding = "utf-8"; 
     private TextView mTitleTextView;
     private TextView mSrcTextView;
-    private Button mButtonBack;
+    private ImageButton mButtonBack;
     private WebView mWebView;
     private ProgressBar mProgressBar;
     
@@ -118,7 +120,7 @@ public class DetailActivity extends Activity implements OnClickListener {
 	}
 	
 	protected void initViews() {
-		mButtonBack = (Button) findViewById(R.id.btn_back);
+		mButtonBack = (ImageButton) findViewById(R.id.btn_back);
 		mButtonBack.setOnClickListener(this);
 		
 		mTitleTextView = (TextView) findViewById(R.id.txt_title);
@@ -135,7 +137,6 @@ public class DetailActivity extends Activity implements OnClickListener {
 		mProgressBar.setVisibility(View.VISIBLE);
 		
 		FinalHttp http = new FinalHttp();
-		System.out.println("site:" + "http://api.mvmap.com/item/" + id);
         // 取分类
         http.get("http://api.mvmap.com/item/" + id, new AjaxCallBack<String> () {
         	@Override
@@ -148,15 +149,7 @@ public class DetailActivity extends Activity implements OnClickListener {
         		Gson g = new Gson();
         		ArrayList<NewsDetail> newsDetails = g.fromJson(t, new TypeToken<ArrayList<NewsDetail>>() {}.getType());
         		mNewsDetail = newsDetails.get(0);
-//        		String string = "mNewsDetail : " + mNewsDetail.toString();
-//				System.out.println(string);
-        		
-//        		ArrayList<Map<String, String>> newsArray = g.fromJson(t, new TypeToken<ArrayList<Map<String, String>>>() {}.getType());
-////        		System.err.println("title : " + newsArray.get(0).get("title"));
-//        		contentString = newsArray.get(0).get("content");
-//        		titleString = newsArray.get(0).get("title");
         		mHandler.sendEmptyMessage(1);
-        		
         	}
         	
         	@Override
@@ -171,7 +164,6 @@ public class DetailActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.btn_back:
 			finish();

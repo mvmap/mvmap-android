@@ -1,4 +1,4 @@
-package com.mvmap.loader;
+package com.mvmap.news.loader;
 
 import java.io.DataInputStream;  
 import java.io.File;  
@@ -10,8 +10,7 @@ import java.lang.ref.SoftReference;
 import java.net.URL;  
 import java.util.HashMap;  
 
-import com.mvmap.R.id;
-import com.mvmap.model.MD5;
+import com.mvmap.news.model.MD5;
   
 import android.graphics.drawable.Drawable;  
 import android.os.Environment;  
@@ -140,8 +139,8 @@ public class AsyncImageLoader {
     public static Drawable loadImageFromUrl(String url) throws IOException {  
        
         if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){  
-            File f = new File(Environment.getExternalStorageDirectory()+"/TestSyncListView/"+MD5.getMD5(url));  
-            File dir = new File(Environment.getExternalStorageDirectory()+"/TestSyncListView/");
+            File f = new File(Environment.getExternalStorageDirectory()+"/Mvmap/"+MD5.getMD5(url));  
+            File dir = new File(Environment.getExternalStorageDirectory()+"/Mvmap/");
             if (!dir.exists()) {
             	dir.mkdir();
             }
