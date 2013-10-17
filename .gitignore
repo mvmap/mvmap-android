@@ -1,0 +1,5 @@
+/gen
+/bin
+*.DS_Store
+.settings/
+proguard/

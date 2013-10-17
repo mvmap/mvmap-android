@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:holo="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single" >
+        <item
+            android:id="@+id/detail_ts_largest"
+            android:title="@string/text_size_largest"/>
+        <item
+            android:id="@+id/detail_ts_larger"
+            android:title="@string/text_size_larger"/>
+        <item
+            android:id="@+id/detail_ts_normal"
+            android:checked="true"
+            android:title="@string/text_size_normal"/>
+        <item
+            android:id="@+id/detail_ts_smaller"
+            android:title="@string/text_size_smaller"/>
+        <item
+            android:id="@+id/detail_ts_smallest"
+            android:title="@string/text_size_smallest"/>
+    </group>
+
+</menu>
