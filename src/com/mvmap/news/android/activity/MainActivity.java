@@ -7,7 +7,6 @@ import org.holoeverywhere.addon.AddonSlider.AddonSliderA;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.Activity.Addons;
 import org.holoeverywhere.slider.SliderMenu;
-import org.holoeverywhere.slider.SliderMenu.SliderItem;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -39,7 +38,7 @@ public class MainActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().setTitle(R.string.app_name);
-		mSliderMenu = addonSlider().obtainDefaultSliderMenu(R.layout.main_left_menu);
+		mSliderMenu = addonSlider().obtainDefaultSliderMenu(R.menu.main_left_menu);
 		MvmapNewsManager.getInstance().getNewsCategory(createMyReqSuccessListener(), 
 				createMyReqErrorListener());
 		
@@ -52,17 +51,12 @@ public class MainActivity extends Activity{
 			@Override
 			public void onResponse(List<Category> list) {
 				for(Category category : list){
-					SliderItem item = new SliderItem();
-					item.setFragmentClass(MainFragment.class);
 					Bundle fragmentArguments = new Bundle();
 					fragmentArguments.putString("name", category.getCategoryName());
 					fragmentArguments.putInt("id", category.getCategoryId());
-					item.setFragmentArguments(fragmentArguments);
-					item.setLabel(category.getCategoryName());
 
-					item.setBackgroundColor(getResources().getColor(SliderMenu.BLUE[0]));
-					item.setSelectionHandlerColor(getResources().getColor(SliderMenu.BLUE[1]));
-					mSliderMenu.add(item);
+					mSliderMenu.add(category.getCategoryName(), MainFragment.class, 
+							fragmentArguments, SliderMenu.BLUE);
 				}
 				mSliderMenu.setCurrentPage(0);
 			}

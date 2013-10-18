@@ -9,7 +9,6 @@ import org.holoeverywhere.app.Application;
 import android.graphics.Bitmap.CompressFormat;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
-import android.util.Log;
 
 import com.mvmap.news.android.R;
 import com.mvmap.news.android.images.ImageCacheManager;
@@ -72,7 +71,6 @@ public class MvmapApplication extends Application{
 	private void _init() {
 		RequestManager.init(this);
 		createImageCache();
-		Log.e("asdasdasd", this.getPackageCodePath());
 	}
 	
 	/**

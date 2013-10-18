@@ -58,23 +58,23 @@ public class MainFragment extends Fragment implements OnRefreshListener2<ListVie
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
-		mListView = (PullToRefreshListView)getView().findViewById(R.id.pull_to_refresh_listview);
-		mListView.setOnRefreshListener(this);
-		mListView.setOnItemClickListener(this);
-		mListView.setMode(Mode.DISABLED);
-		mProgressBar = (ProgressBar)getView().findViewById(R.id.main_loading);
-		mProgressBar.setVisibility(View.VISIBLE);
-		MvmapNewsManager.getInstance().getNewsList(createMyReqSuccessListener(), 
-				createMyReqErrorListener(), catId, start);
+		if(mListView == null){
+			mListView = (PullToRefreshListView)getView().findViewById(R.id.pull_to_refresh_listview);
+			mListView.setOnRefreshListener(this);
+			mListView.setOnItemClickListener(this);
+			mProgressBar = (ProgressBar)getView().findViewById(R.id.main_loading);
+			mProgressBar.setVisibility(View.VISIBLE);
+			MvmapNewsManager.getInstance().getNewsList(createMyReqSuccessListener(), 
+					createMyReqErrorListener(), catId, start);
+		}
 		
 	}
 	@Override
 	public void onResume() {
 		super.onResume();
 		getSupportActionBar().setSubtitle(title);
-	}
 
+	}
 
 	@Override
 	public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -121,6 +121,7 @@ public class MainFragment extends Fragment implements OnRefreshListener2<ListVie
 				Log.e(TAG, "data failed to load: "+error.getMessage());
 				mListView.onRefreshComplete();
 				mProgressBar.setVisibility(View.GONE);
+				mListView.setMode(Mode.DISABLED);
 			}
 		};
 	}

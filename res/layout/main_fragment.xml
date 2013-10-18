@@ -13,7 +13,7 @@
         ptr:ptrAnimationStyle="rotate"
         ptr:ptrHeaderBackground="#80A1A1A1"
         ptr:ptrHeaderTextAppearance="?android:textAppearanceSmall"
-        ptr:ptrMode="both"
+        ptr:ptrMode="disabled"
         ptr:ptrOverScroll="false" />
 
     <ProgressBar
