@@ -11,6 +11,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".activity.MvmapApplication"
@@ -33,6 +35,19 @@
             android:name=".activity.DetailActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+
+        <service
+            android:name="com.umeng.common.net.DownloadingService"
+            android:process=":DownloadingService" >
+        </service>
     </application>
+
+    <meta-data
+        android:name="UMENG_APPKEY"
+        android:value="5260c52156240bee00013d61" >
+    </meta-data>
+    <meta-data
+        android:name="UMENG_CHANNEL"
+        android:value="Channel ID" />
 
 </manifest>

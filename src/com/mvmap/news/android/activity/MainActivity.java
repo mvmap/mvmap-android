@@ -20,6 +20,8 @@ import com.mvmap.news.android.common.DClickExit;
 import com.mvmap.news.android.fragment.MainFragment;
 import com.mvmap.news.android.model.Category;
 import com.mvmap.news.android.request.MvmapNewsManager;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 @Addons(Activity.ADDON_SLIDER)
 public class MainActivity extends Activity{
@@ -37,11 +39,12 @@ public class MainActivity extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		UmengUpdateAgent.update(this);
 		getSupportActionBar().setTitle(R.string.app_name);
 		mSliderMenu = addonSlider().obtainDefaultSliderMenu(R.menu.main_left_menu);
 		MvmapNewsManager.getInstance().getNewsCategory(createMyReqSuccessListener(), 
 				createMyReqErrorListener());
-		
+
 	}
 
 
@@ -83,6 +86,15 @@ public class MainActivity extends Activity{
 		default:
 			return super.onKeyDown(keyCode, event);
 		}
+	}
+
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 
 }

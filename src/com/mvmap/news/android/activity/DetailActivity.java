@@ -29,6 +29,7 @@ import com.android.volley.VolleyError;
 import com.mvmap.news.android.R;
 import com.mvmap.news.android.model.News;
 import com.mvmap.news.android.request.MvmapNewsManager;
+import com.umeng.analytics.MobclickAgent;
 
 public class DetailActivity extends Activity implements OnClickListener, OnMenuItemClickListener{
 
@@ -69,8 +70,8 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 		mContentView = (WebView) findViewById(R.id.detail_content);
 		webSettings = mContentView.getSettings();  
 		webSettings.setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
-//		webSettings.setUseWideViewPort(true);
-//		webSettings.setLoadWithOverviewMode(true);
+		//		webSettings.setUseWideViewPort(true);
+		//		webSettings.setLoadWithOverviewMode(true);
 		webSettings.setJavaScriptEnabled(false);  
 		webSettings.setBuiltInZoomControls(false);
 		webSettings.setSupportZoom(false);
@@ -188,6 +189,15 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 			break;
 		}
 		return false;
+	}
+
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 
 }
