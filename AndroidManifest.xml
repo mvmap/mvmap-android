@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mvmap.news.android"
+    package="com.mvmap.news"
     android:installLocation="auto"
     android:versionCode="1"
     android:versionName="0.1" >
@@ -15,13 +15,13 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
-        android:name=".activity.MvmapApplication"
+        android:name="com.mvmap.news.android.activity.MvmapApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name=".activity.MainActivity"
+            android:name="com.mvmap.news.android.activity.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" >
@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.DetailActivity"
+            android:name="com.mvmap.news.android.activity.DetailActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 

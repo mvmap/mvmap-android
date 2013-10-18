@@ -16,7 +16,7 @@ import android.util.Log;
 
 import com.android.volley.toolbox.ImageLoader.ImageCache;
 import com.jakewharton.disklrucache.DiskLruCache;
-import com.mvmap.news.android.BuildConfig;
+import com.mvmap.news.BuildConfig;
 
 /**
  * Implementation of DiskLruCache by Jake Wharton

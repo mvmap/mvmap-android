@@ -21,7 +21,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.mvmap.news.android.R;
+import com.mvmap.news.R;
 import com.mvmap.news.android.activity.DetailActivity;
 import com.mvmap.news.android.adapter.NewsListAdapter;
 import com.mvmap.news.android.model.Tweet;

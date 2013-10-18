@@ -10,7 +10,7 @@ import android.graphics.Bitmap.CompressFormat;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 
-import com.mvmap.news.android.R;
+import com.mvmap.news.R;
 import com.mvmap.news.android.images.ImageCacheManager;
 import com.mvmap.news.android.images.ImageCacheManager.CacheType;
 import com.mvmap.news.android.request.RequestManager;

@@ -26,7 +26,7 @@ import android.webkit.WebViewClient;
 import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
-import com.mvmap.news.android.R;
+import com.mvmap.news.R;
 import com.mvmap.news.android.model.News;
 import com.mvmap.news.android.request.MvmapNewsManager;
 import com.umeng.analytics.MobclickAgent;

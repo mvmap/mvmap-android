@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
-import com.mvmap.news.android.R;
+import com.mvmap.news.R;
 import com.mvmap.news.android.images.ImageCacheManager;
 import com.mvmap.news.android.model.Tweet;
 

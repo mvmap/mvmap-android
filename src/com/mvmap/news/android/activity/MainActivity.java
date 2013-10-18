@@ -15,7 +15,7 @@ import android.view.KeyEvent;
 import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
-import com.mvmap.news.android.R;
+import com.mvmap.news.R;
 import com.mvmap.news.android.common.DClickExit;
 import com.mvmap.news.android.fragment.MainFragment;
 import com.mvmap.news.android.model.Category;
