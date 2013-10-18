@@ -22,8 +22,6 @@ import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebSettings.TextSize;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.Response.Listener;
@@ -39,15 +37,13 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 	private	static final String mimeType = "text/html";  
 	private	static final String encoding = "utf-8"; 
 
-	private 	TextView 			mTitleTextView;
 	private 	ImageButton 		mButtonBack;
 	private		ImageButton			mButtonFullScreen;
 	private		ImageButton			mButtonTextsize;
 	private 	WebView 			mContentView;
 	private		ProgressBar			mProgressBar;
 	private		CheckedTextView		mCheckTextView;
-	private		PopupMenu 			mPopupMenu;
-	private		ScrollView			mScrollView;			
+	private		PopupMenu 			mPopupMenu;		
 	private 	News				mNews;
 
 	private		WebSettings 		webSettings;
@@ -70,13 +66,11 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 		mButtonTextsize = (ImageButton)findViewById(R.id.detail_btn_textsize);
 		mButtonTextsize.setOnClickListener(this);
 
-		mTitleTextView = (TextView) findViewById(R.id.detail_title);
-
-		mScrollView = (ScrollView)findViewById(R.id.detail_scrollview);
-
 		mContentView = (WebView) findViewById(R.id.detail_content);
 		webSettings = mContentView.getSettings();  
 		webSettings.setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
+//		webSettings.setUseWideViewPort(true);
+//		webSettings.setLoadWithOverviewMode(true);
 		webSettings.setJavaScriptEnabled(false);  
 		webSettings.setBuiltInZoomControls(false);
 		webSettings.setSupportZoom(false);
@@ -90,7 +84,7 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 				webSettings.setBlockNetworkImage(false);
 			}
 		});
-		
+
 
 		mProgressBar = (ProgressBar)findViewById(R.id.detail_loading);
 		mProgressBar.setVisibility(View.VISIBLE);
@@ -100,18 +94,25 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 				createMyReqErrorListener(), newsId);
 	}
 
-
+	private String createContent(){
+		StringBuffer sb = new StringBuffer();
+		sb.append("<p style=\"font-size:20px;\"><strong>");
+		sb.append(mNews.getTitle());
+		sb.append("<strong></p>");
+		sb.append("<hr size=\"2\" color=\"#0099cc\" align=\"center noshade\">");
+		sb.append(mNews.getContent());
+		return sb.toString();
+	}
 
 	private Listener<News> createMyReqSuccessListener(){
 
 		return new Listener<News>(){
 			@Override
 			public void onResponse(News news) {
-				mTitleTextView.setText(news.getTitle());
-				mContentView.loadDataWithBaseURL(null, news.getContent(), 
+				mNews = news;
+				mContentView.loadDataWithBaseURL(null, createContent(), 
 						mimeType, encoding, null);
 				mProgressBar.setVisibility(View.GONE);
-				mNews = news;
 			}
 		};
 	}
@@ -166,31 +167,22 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 		case R.id.detail_ts_largest:
 			webSettings.setTextSize(TextSize.LARGEST);
 			item.setChecked(true);
-			
 			break;
 		case R.id.detail_ts_larger:
 			webSettings.setTextSize(TextSize.LARGER);
 			item.setChecked(true);
-			
-			
 			break;
 		case R.id.detail_ts_normal:
 			webSettings.setTextSize(TextSize.NORMAL);
 			item.setChecked(true);
-//			findViewById(R.id.detail_linearlayout).invalidate();
-			
 			break;
 		case R.id.detail_ts_smaller:
 			webSettings.setTextSize(TextSize.SMALLER);
 			item.setChecked(true);
-			
-			
 			break;
 		case R.id.detail_ts_smallest:
 			webSettings.setTextSize(TextSize.SMALLEST);
 			item.setChecked(true);
-			
-			
 			break;
 		default:
 			break;
