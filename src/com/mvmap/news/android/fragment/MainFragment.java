@@ -1,5 +1,6 @@
 package com.mvmap.news.android.fragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.holoeverywhere.LayoutInflater;
@@ -132,7 +133,13 @@ public class MainFragment extends Fragment implements OnRefreshListener2<ListVie
 			int position, long arg3) {
 		Tweet tweet = (Tweet)arg0.getAdapter().getItem(position);
 		Intent intent = new Intent(getActivity(), DetailActivity.class);
-		intent.putExtra("id", tweet.getTweetId());
+		//intent.putExtra("id", tweet.getTweetId());
+		ArrayList<Integer> newsIdList = new ArrayList<Integer>();
+		newsIdList.add(tweet.getTweetId());
+		newsIdList.add(tweet.getTweetId()+1);
+		newsIdList.add(tweet.getTweetId()+2);
+		newsIdList.add(tweet.getTweetId()+3);
+		intent.putIntegerArrayListExtra("ids", newsIdList);
 		startActivity(intent);
 	}
 

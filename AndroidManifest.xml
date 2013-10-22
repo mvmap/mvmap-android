@@ -16,13 +16,13 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
-        android:name="com.mvmap.news.android.activity.MvmapApplication"
+        android:name=".android.activity.MvmapApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name="com.mvmap.news.android.activity.MainActivity"
+            android:name=".android.activity.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" >
@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.mvmap.news.android.activity.DetailActivity"
+            android:name=".android.activity.DetailActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
@@ -44,7 +44,7 @@
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5260c52156240bee00013d61" />
+            android:value="5260c52156240bee00013d61__" />
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="mvmap" />

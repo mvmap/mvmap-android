@@ -55,7 +55,7 @@ public class NewsListAdapter extends BaseAdapter{
 	}
 
 
-	static class ViewHolder {
+	class ViewHolder {
 		NetworkImageView imageView;
 		TextView titleTextView;
 		TextView originTextView;

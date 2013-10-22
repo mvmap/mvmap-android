@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
-    <WebView
+    <com.mvmap.news.android.view.ViewFlow
         android:id="@+id/detail_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom|center"
-        android:layout_marginBottom="45dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="5dp" />
@@ -16,7 +16,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_gravity="bottom"
         android:background="@color/background_holo_light"
         android:orientation="horizontal" >
 
@@ -53,12 +52,4 @@
             android:src="@drawable/more_btn_selector_night" />
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/detail_loading"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone" />
-
-</FrameLayout>
+</LinearLayout>

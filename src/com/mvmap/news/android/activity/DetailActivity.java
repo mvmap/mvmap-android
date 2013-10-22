@@ -2,52 +2,50 @@ package com.mvmap.news.android.activity;
 
 
 
+import java.util.List;
+
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.widget.CheckedTextView;
 import org.holoeverywhere.widget.ImageButton;
-import org.holoeverywhere.widget.ProgressBar;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebSettings;
-import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebSettings.TextSize;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.widget.BaseAdapter;
 
-import com.android.volley.Response;
-import com.android.volley.Response.Listener;
-import com.android.volley.VolleyError;
 import com.mvmap.news.R;
+import com.mvmap.news.android.adapter.WebviewAdapter;
+import com.mvmap.news.android.adapter.WebviewAdapter.ViewHolder;
 import com.mvmap.news.android.model.News;
-import com.mvmap.news.android.request.MvmapNewsManager;
+import com.mvmap.news.android.view.ViewFlow;
+import com.mvmap.news.android.view.ViewFlow.ViewSwitchListener;
 import com.umeng.analytics.MobclickAgent;
 
-public class DetailActivity extends Activity implements OnClickListener, OnMenuItemClickListener{
+public class DetailActivity extends Activity implements OnClickListener, OnMenuItemClickListener
+, ViewSwitchListener{
 
 	private static final String TAG = DetailActivity.class.getSimpleName();
 
-	private	static final String mimeType = "text/html";  
-	private	static final String encoding = "utf-8"; 
 
 	private 	ImageButton 		mButtonBack;
 	private		ImageButton			mButtonFullScreen;
 	private		ImageButton			mButtonTextsize;
-	private 	WebView 			mContentView;
-	private		ProgressBar			mProgressBar;
 	private		CheckedTextView		mCheckTextView;
-	private		PopupMenu 			mPopupMenu;		
-	private 	News				mNews;
-
-	private		WebSettings 		webSettings;
+	private		PopupMenu 			mPopupMenu;
+	private		ViewFlow 			mViewFlow;
+	
+	
+	private		News				mCurNews;
+	private		WebSettings			mCurWebSettings;
 
 
 	@Override
@@ -67,68 +65,13 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 		mButtonTextsize = (ImageButton)findViewById(R.id.detail_btn_textsize);
 		mButtonTextsize.setOnClickListener(this);
 
-		mContentView = (WebView) findViewById(R.id.detail_content);
-		webSettings = mContentView.getSettings();  
-		webSettings.setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
-		//		webSettings.setUseWideViewPort(true);
-		//		webSettings.setLoadWithOverviewMode(true);
-		webSettings.setJavaScriptEnabled(false);  
-		webSettings.setBuiltInZoomControls(false);
-		webSettings.setSupportZoom(false);
-		webSettings.setTextSize(TextSize.NORMAL);
-		webSettings.setLoadsImagesAutomatically(true);
-		webSettings.setBlockNetworkImage(true);
-		mContentView.setWebViewClient(new WebViewClient(){
-			@Override
-			public void onPageFinished(WebView view, String url) {
-				super.onPageFinished(view, url);
-				webSettings.setBlockNetworkImage(false);
-			}
-		});
+		List<Integer> newsIdList = getIntent().getIntegerArrayListExtra("ids");
+		mViewFlow= (ViewFlow) findViewById(R.id.detail_content);
+		BaseAdapter mAdapter = new WebviewAdapter(this, newsIdList);
+		mViewFlow.setAdapter(mAdapter);
+		mViewFlow.setOnViewSwitchListener(this);
 
-
-		mProgressBar = (ProgressBar)findViewById(R.id.detail_loading);
-		mProgressBar.setVisibility(View.VISIBLE);
-
-		int newsId = getIntent().getIntExtra("id", 0);
-		MvmapNewsManager.getInstance().getNewsItem(createMyReqSuccessListener(), 
-				createMyReqErrorListener(), newsId);
 	}
-
-	private String createContent(){
-		StringBuffer sb = new StringBuffer();
-		sb.append("<p style=\"font-size:20px;\"><strong>");
-		sb.append(mNews.getTitle());
-		sb.append("<strong></p>");
-		sb.append("<hr size=\"2\" color=\"#0099cc\" align=\"center noshade\">");
-		sb.append(mNews.getContent());
-		return sb.toString();
-	}
-
-	private Listener<News> createMyReqSuccessListener(){
-
-		return new Listener<News>(){
-			@Override
-			public void onResponse(News news) {
-				mNews = news;
-				mContentView.loadDataWithBaseURL(null, createContent(), 
-						mimeType, encoding, null);
-				mProgressBar.setVisibility(View.GONE);
-			}
-		};
-	}
-
-	private Response.ErrorListener createMyReqErrorListener() {
-		return new Response.ErrorListener() {
-			@Override
-			public void onErrorResponse(VolleyError error) {
-				Log.e(TAG, "data failed to load: "+error.getMessage());
-				mProgressBar.setVisibility(View.GONE);
-			}
-		};
-	}
-
-
 
 	@Override
 	public void onClick(View view) {
@@ -137,8 +80,8 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 			finish();
 			break;
 		case R.id.detail_btn_fullscreen:
-			if(mNews != null){
-				Uri uri = Uri.parse(mNews.getOrigin());   
+			if(mCurNews != null){
+				Uri uri = Uri.parse(mCurNews.getOrigin());   
 				Intent intent = new Intent(Intent.ACTION_VIEW,uri);  
 				startActivity(intent);				
 			}
@@ -164,26 +107,23 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 
 	@Override
 	public boolean onMenuItemClick(MenuItem item) {
+		if(mCurWebSettings == null) return false;
+		item.setChecked(true);
 		switch (item.getItemId()) {
 		case R.id.detail_ts_largest:
-			webSettings.setTextSize(TextSize.LARGEST);
-			item.setChecked(true);
+			mCurWebSettings.setTextSize(TextSize.LARGEST);
 			break;
 		case R.id.detail_ts_larger:
-			webSettings.setTextSize(TextSize.LARGER);
-			item.setChecked(true);
+			mCurWebSettings.setTextSize(TextSize.LARGER);
 			break;
 		case R.id.detail_ts_normal:
-			webSettings.setTextSize(TextSize.NORMAL);
-			item.setChecked(true);
+			mCurWebSettings.setTextSize(TextSize.NORMAL);
 			break;
 		case R.id.detail_ts_smaller:
-			webSettings.setTextSize(TextSize.SMALLER);
-			item.setChecked(true);
+			mCurWebSettings.setTextSize(TextSize.SMALLER);
 			break;
 		case R.id.detail_ts_smallest:
-			webSettings.setTextSize(TextSize.SMALLEST);
-			item.setChecked(true);
+			mCurWebSettings.setTextSize(TextSize.SMALLEST);
 			break;
 		default:
 			break;
@@ -198,6 +138,15 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 	public void onPause() {
 		super.onPause();
 		MobclickAgent.onPause(this);
+	}
+
+	@Override
+	public void onSwitched(View view, int position) {
+		Object viewTag = view.getTag();
+		if(viewTag != null){
+			mCurNews = ((ViewHolder)viewTag).mNews;
+		}
+		mCurWebSettings = ((WebView)view.findViewById(R.id.detail_webview)).getSettings();
 	}
 
 }
