@@ -28,6 +28,11 @@ public class Tweet {
 	private		String		img;
 	@SerializedName("view_count")
 	private		int			viewCount;
+	@SerializedName("ids")
+	private		String			relatedIds;
+	
+	
+	
 	public int getTweetId() {
 		return tweetId;
 	}
@@ -70,5 +75,11 @@ public class Tweet {
 	public void setViewCount(int viewCount) {
 		this.viewCount = viewCount;
 	}
-
+	public String getRelatedIds() {
+		return relatedIds;
+	}
+	public void setRelatedIds(String relatedIds) {
+		this.relatedIds = relatedIds;
+	}
+	
 }

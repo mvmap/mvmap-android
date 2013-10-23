@@ -24,6 +24,8 @@ import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -83,6 +85,21 @@ public class ViewFlow extends AdapterView<Adapter> {
 			setSelection(mCurrentAdapterIndex);
 		}
 	};
+	
+	
+	private GestureDetector 		mGestureDetector;
+
+	class YScrollDetector extends SimpleOnGestureListener {
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            if(Math.abs(distanceX) > 3*Math.abs(distanceY)) {
+                return true;
+            }
+            return false;
+        }
+    }
+	
+	
 
 	/**
 	 * Receives call backs when a new {@link View} has been scrolled to.
@@ -137,6 +154,8 @@ public class ViewFlow extends AdapterView<Adapter> {
 				.get(getContext());
 		mTouchSlop = configuration.getScaledTouchSlop();
 		mMaximumVelocity = configuration.getScaledMaximumFlingVelocity();
+		
+		mGestureDetector = new GestureDetector(getContext(), new YScrollDetector());
 	}
 
 	public void onConfigurationChanged(Configuration newConfig) {
@@ -229,7 +248,7 @@ public class ViewFlow extends AdapterView<Adapter> {
 		case MotionEvent.ACTION_MOVE:
 			final int deltaX = (int) (mLastMotionX - x);
 
-			boolean xMoved = Math.abs(deltaX) > mTouchSlop;
+			boolean xMoved = (Math.abs(deltaX) > mTouchSlop) && mGestureDetector.onTouchEvent(ev);;
 
 			if (xMoved) {
 				// Scroll if the user moved far enough along the X axis

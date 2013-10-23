@@ -134,12 +134,11 @@ public class MainFragment extends Fragment implements OnRefreshListener2<ListVie
 		Tweet tweet = (Tweet)arg0.getAdapter().getItem(position);
 		Intent intent = new Intent(getActivity(), DetailActivity.class);
 		//intent.putExtra("id", tweet.getTweetId());
-		ArrayList<Integer> newsIdList = new ArrayList<Integer>();
-		newsIdList.add(tweet.getTweetId());
-		newsIdList.add(tweet.getTweetId()+1);
-		newsIdList.add(tweet.getTweetId()+2);
-		newsIdList.add(tweet.getTweetId()+3);
-		intent.putIntegerArrayListExtra("ids", newsIdList);
+		ArrayList<String> newsIdList = new ArrayList<String>();
+		for (String idstr :  tweet.getRelatedIds().split(",")){
+			newsIdList.add(idstr);
+		}
+		intent.putStringArrayListExtra("ids", newsIdList);
 		startActivity(intent);
 	}
 

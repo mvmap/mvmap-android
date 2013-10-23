@@ -30,9 +30,9 @@ public class WebviewAdapter extends BaseAdapter{
 	private	static final String encoding = "utf-8"; 
 
 	private   DetailActivity		mActivity;
-	private	  List<Integer>         newsIdList;
+	private	  List<String>          newsIdList;
 
-	public WebviewAdapter(DetailActivity mActivity, List<Integer> newsIdList) {
+	public WebviewAdapter(DetailActivity mActivity, List<String> newsIdList) {
 		this.mActivity = mActivity;
 		this.newsIdList = newsIdList;
 	}
@@ -126,10 +126,9 @@ public class WebviewAdapter extends BaseAdapter{
 		}else{
 			holder = (ViewHolder) convertView.getTag();
 		}
+		
 		MvmapNewsManager.getInstance().getNewsItem(createMyReqSuccessListener(holder), 
 				createMyReqErrorListener(holder), newsIdList.get(position));
-
-
 
 		return convertView;
 	}

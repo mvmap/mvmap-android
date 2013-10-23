@@ -68,5 +68,6 @@ public class News {
 	public void setFeedName(String feedName) {
 		this.feedName = feedName;
 	}
+	
 
 }

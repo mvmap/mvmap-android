@@ -80,7 +80,7 @@ public class MvmapNewsManager {
 	}
 
 
-	public void getNewsItem(Listener<News> listener, ErrorListener errorListener, int newsId){
+	public void getNewsItem(Listener<News> listener, ErrorListener errorListener, String newsId){
 		Uri.Builder uriBuilder = Uri.parse(HTTPREQ.NEWS_ITEM.base).buildUpon();
 		String url = String.format(uriBuilder.build().toString(), newsId);
 

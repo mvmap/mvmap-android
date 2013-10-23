@@ -5,13 +5,15 @@
     android:orientation="vertical" >
 
     <com.mvmap.news.android.view.ViewFlow
+        xmlns:viewflow="http://schemas.android.com/apk/res-auto"
         android:id="@+id/detail_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:layout_weight="1"
+        viewflow:sidebuffer="1" />
 
     <LinearLayout
         android:layout_width="match_parent"

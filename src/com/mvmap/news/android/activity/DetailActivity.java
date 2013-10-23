@@ -65,7 +65,7 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 		mButtonTextsize = (ImageButton)findViewById(R.id.detail_btn_textsize);
 		mButtonTextsize.setOnClickListener(this);
 
-		List<Integer> newsIdList = getIntent().getIntegerArrayListExtra("ids");
+		List<String> newsIdList = getIntent().getStringArrayListExtra("ids");
 		mViewFlow= (ViewFlow) findViewById(R.id.detail_content);
 		BaseAdapter mAdapter = new WebviewAdapter(this, newsIdList);
 		mViewFlow.setAdapter(mAdapter);
