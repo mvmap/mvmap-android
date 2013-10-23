@@ -135,6 +135,7 @@ public class MainFragment extends Fragment implements OnRefreshListener2<ListVie
 		Intent intent = new Intent(getActivity(), DetailActivity.class);
 		//intent.putExtra("id", tweet.getTweetId());
 		ArrayList<String> newsIdList = new ArrayList<String>();
+		newsIdList.add(String.valueOf(tweet.getTweetId()));
 		for (String idstr :  tweet.getRelatedIds().split(",")){
 			newsIdList.add(idstr);
 		}
