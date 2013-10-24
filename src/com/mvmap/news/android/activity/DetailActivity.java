@@ -6,9 +6,11 @@ import java.util.List;
 
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.app.DialogFragment;
 import org.holoeverywhere.widget.CheckedTextView;
 import org.holoeverywhere.widget.ImageButton;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
@@ -19,13 +21,12 @@ import android.view.View.OnClickListener;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.TextSize;
 import android.webkit.WebView;
-import android.widget.BaseAdapter;
 
 import com.mvmap.news.R;
 import com.mvmap.news.android.adapter.WebviewAdapter;
-import com.mvmap.news.android.adapter.WebviewAdapter.ViewHolder;
 import com.mvmap.news.android.common.BitmapUtil;
 import com.mvmap.news.android.common.ConstWeixin;
+import com.mvmap.news.android.fragment.ShareDialogFragment;
 import com.mvmap.news.android.model.News;
 import com.mvmap.news.android.view.ViewFlow;
 import com.mvmap.news.android.view.ViewFlow.ViewSwitchListener;
@@ -40,7 +41,7 @@ import com.tencent.mm.sdk.openapi.WXWebpageObject;
 import com.umeng.analytics.MobclickAgent;
 
 public class DetailActivity extends Activity implements OnClickListener, OnMenuItemClickListener
-, ViewSwitchListener, IWXAPIEventHandler{
+, ViewSwitchListener, IWXAPIEventHandler, DialogInterface.OnClickListener{
 
 	private static final String TAG = DetailActivity.class.getSimpleName();
 
@@ -51,6 +52,8 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 	private		CheckedTextView		mCheckTextView;
 	private		PopupMenu 			mPopupMenu;
 	private		ViewFlow 			mViewFlow;
+	private		WebviewAdapter		mAdapter;
+	private		int					mCurPosition;
 
 
 	private		News				mCurNews;
@@ -81,7 +84,7 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 
 		List<String> newsIdList = getIntent().getStringArrayListExtra("ids");
 		mViewFlow= (ViewFlow) findViewById(R.id.detail_content);
-		BaseAdapter mAdapter = new WebviewAdapter(this, newsIdList);
+		mAdapter = new WebviewAdapter(this, newsIdList);
 		mViewFlow.setAdapter(mAdapter);
 		mViewFlow.setOnViewSwitchListener(this);
 
@@ -107,20 +110,11 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 			//				Intent intent = new Intent(Intent.ACTION_VIEW,uri);  
 			//				startActivity(intent);				
 			//			}
+			
+			mCurNews = mAdapter.getCurNews(mCurPosition);
 			if(mCurNews == null) return;
-			wxapi.registerApp(ConstWeixin.APP_ID);
-			WXWebpageObject webpage = new WXWebpageObject();
-			webpage.webpageUrl = mCurNews.getOrigin();
-			WXMediaMessage msg = new WXMediaMessage(webpage);
-			msg.title = mCurNews.getTitle();
-			//msg.description = ;
-			msg.thumbData = BitmapUtil.getBytesFromUrl(mCurNews.getOrigin());
-
-			SendMessageToWX.Req req = new SendMessageToWX.Req();
-			req.scene = SendMessageToWX.Req.WXSceneTimeline;
-			req.transaction = "webpage"+System.currentTimeMillis();
-			req.message = msg;
-			wxapi.sendReq(req);
+			DialogFragment dialogFm = new ShareDialogFragment();
+			dialogFm.show(getSupportFragmentManager());
 			break;
 		case R.id.detail_btn_fav:
 			((CheckedTextView)view).toggle();
@@ -139,6 +133,31 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 		}
 	}
 
+	@Override
+	public void onClick(DialogInterface dialog, int which) {
+		switch (which) {
+		case 0:
+			break;
+		case 1:
+			wxapi.registerApp(ConstWeixin.APP_ID);
+			WXWebpageObject webpage = new WXWebpageObject();
+			webpage.webpageUrl = mCurNews.getOrigin();
+			WXMediaMessage msg = new WXMediaMessage(webpage);
+			msg.title = mCurNews.getTitle();
+			//msg.description = ;
+			msg.thumbData = BitmapUtil.getBytesFromUrl(mCurNews.getOrigin());
+
+			SendMessageToWX.Req req = new SendMessageToWX.Req();
+			req.scene = SendMessageToWX.Req.WXSceneTimeline;
+			req.transaction = "webpage"+System.currentTimeMillis();
+			req.message = msg;
+			wxapi.sendReq(req);
+			break;
+		default:
+			break;
+		}
+
+	}
 
 
 	@Override
@@ -178,10 +197,7 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 
 	@Override
 	public void onSwitched(View view, int position) {
-		Object viewTag = view.getTag();
-		if(viewTag != null){
-			mCurNews = ((ViewHolder)viewTag).mNews;
-		}
+		mCurPosition = position;
 		mCurWebSettings = ((WebView)view.findViewById(R.id.detail_webview)).getSettings();
 	}
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="dialog_share">
+        <item>会话</item>
+        <item>朋友圈</item>
+    </string-array>
+
+</resources>

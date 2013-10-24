@@ -1,5 +1,6 @@
 package com.mvmap.news.android.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.holoeverywhere.widget.ProgressBar;
@@ -31,18 +32,23 @@ public class WebviewAdapter extends BaseAdapter{
 
 	private   DetailActivity		mActivity;
 	private	  List<String>          newsIdList;
+	private   List<News> 			newsList;
 
 	public WebviewAdapter(DetailActivity mActivity, List<String> newsIdList) {
 		this.mActivity = mActivity;
 		this.newsIdList = newsIdList;
+		newsList = new ArrayList<News>();
 	}
 
+	public News getCurNews(int position){
+		if(position>=newsList.size())
+			return null;
+		return newsList.get(position);
+	}
 
 	@Override
 	public int getCount() {
-
 		return newsIdList.size();
-
 	}
 
 	@Override
@@ -60,7 +66,6 @@ public class WebviewAdapter extends BaseAdapter{
 	public class ViewHolder {
 		WebView  	mWebview;
 		ProgressBar	mProgressBar;
-		public 		News		mNews;
 	}
 
 	private String createContent(News  news){
@@ -73,12 +78,13 @@ public class WebviewAdapter extends BaseAdapter{
 		return sb.toString();
 	}
 
-	private Listener<News> createMyReqSuccessListener(final ViewHolder holder){
+	private Listener<News> createMyReqSuccessListener(final ViewHolder holder,
+			final int position){
 
 		return new Listener<News>(){
 			@Override
 			public void onResponse(News news) {
-				holder.mNews = news;
+				newsList.add(position, news);
 				holder.mWebview.loadDataWithBaseURL(null, createContent(news), 
 						mimeType, encoding, null);
 				holder.mProgressBar.setVisibility(View.GONE);
@@ -126,8 +132,8 @@ public class WebviewAdapter extends BaseAdapter{
 		}else{
 			holder = (ViewHolder) convertView.getTag();
 		}
-		
-		MvmapNewsManager.getInstance().getNewsItem(createMyReqSuccessListener(holder), 
+
+		MvmapNewsManager.getInstance().getNewsItem(createMyReqSuccessListener(holder, position), 
 				createMyReqErrorListener(holder), newsIdList.get(position));
 
 		return convertView;

@@ -7,6 +7,7 @@
     <string name="text_size_normal">正常</string>
     <string name="text_size_larger">略大</string>
     <string name="text_size_largest">最大</string>
+    <string name="dialog_share_title">分享到&#8230;</string>
     
 
 </resources>
