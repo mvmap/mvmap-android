@@ -10,7 +10,6 @@ import org.holoeverywhere.widget.CheckedTextView;
 import org.holoeverywhere.widget.ImageButton;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
@@ -25,13 +24,23 @@ import android.widget.BaseAdapter;
 import com.mvmap.news.R;
 import com.mvmap.news.android.adapter.WebviewAdapter;
 import com.mvmap.news.android.adapter.WebviewAdapter.ViewHolder;
+import com.mvmap.news.android.common.BitmapUtil;
+import com.mvmap.news.android.common.ConstWeixin;
 import com.mvmap.news.android.model.News;
 import com.mvmap.news.android.view.ViewFlow;
 import com.mvmap.news.android.view.ViewFlow.ViewSwitchListener;
+import com.tencent.mm.sdk.openapi.BaseReq;
+import com.tencent.mm.sdk.openapi.BaseResp;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
+import com.tencent.mm.sdk.openapi.SendMessageToWX;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.mm.sdk.openapi.WXMediaMessage;
+import com.tencent.mm.sdk.openapi.WXWebpageObject;
 import com.umeng.analytics.MobclickAgent;
 
 public class DetailActivity extends Activity implements OnClickListener, OnMenuItemClickListener
-, ViewSwitchListener{
+, ViewSwitchListener, IWXAPIEventHandler{
 
 	private static final String TAG = DetailActivity.class.getSimpleName();
 
@@ -42,10 +51,12 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 	private		CheckedTextView		mCheckTextView;
 	private		PopupMenu 			mPopupMenu;
 	private		ViewFlow 			mViewFlow;
-	
-	
+
+
 	private		News				mCurNews;
 	private		WebSettings			mCurWebSettings;
+
+	private		IWXAPI 				wxapi;
 
 
 	@Override
@@ -55,6 +66,9 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 		setTheme(ThemeManager.DIALOG_WHEN_LARGE | ThemeManager.NO_ACTION_BAR, false);
 		super.onCreate(sSavedInstanceState);
 		setContentView(R.layout.activity_detail);
+
+		wxapi = WXAPIFactory.createWXAPI(this, ConstWeixin.APP_ID, false);
+		wxapi.handleIntent(getIntent(), this);
 
 		mButtonBack = (ImageButton) findViewById(R.id.detail_btn_back);
 		mButtonBack.setOnClickListener(this);
@@ -74,17 +88,39 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 	}
 
 	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		setIntent(intent);
+		wxapi.handleIntent(intent, this);
+	}
+
+
+	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.detail_btn_back:
 			finish();
 			break;
 		case R.id.detail_btn_fullscreen:
-			if(mCurNews != null){
-				Uri uri = Uri.parse(mCurNews.getOrigin());   
-				Intent intent = new Intent(Intent.ACTION_VIEW,uri);  
-				startActivity(intent);				
-			}
+			//			if(mCurNews != null){
+			//				Uri uri = Uri.parse(mCurNews.getOrigin());   
+			//				Intent intent = new Intent(Intent.ACTION_VIEW,uri);  
+			//				startActivity(intent);				
+			//			}
+			if(mCurNews == null) return;
+			wxapi.registerApp(ConstWeixin.APP_ID);
+			WXWebpageObject webpage = new WXWebpageObject();
+			webpage.webpageUrl = mCurNews.getOrigin();
+			WXMediaMessage msg = new WXMediaMessage(webpage);
+			msg.title = mCurNews.getTitle();
+			//msg.description = ;
+			msg.thumbData = BitmapUtil.getBytesFromUrl(mCurNews.getOrigin());
+
+			SendMessageToWX.Req req = new SendMessageToWX.Req();
+			req.scene = SendMessageToWX.Req.WXSceneTimeline;
+			req.transaction = "webpage"+System.currentTimeMillis();
+			req.message = msg;
+			wxapi.sendReq(req);
 			break;
 		case R.id.detail_btn_fav:
 			((CheckedTextView)view).toggle();
@@ -147,6 +183,16 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 			mCurNews = ((ViewHolder)viewTag).mNews;
 		}
 		mCurWebSettings = ((WebView)view.findViewById(R.id.detail_webview)).getSettings();
+	}
+
+	@Override
+	public void onReq(BaseReq arg0) {
+
+	}
+
+	@Override
+	public void onResp(BaseResp arg0) {
+
 	}
 
 }

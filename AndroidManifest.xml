@@ -46,6 +46,16 @@
             android:name="com.umeng.common.net.DownloadingService"
             android:process=":DownloadingService" >
         </service>
+        
+     	<!-- weixin start -->
+        <receiver
+            android:name=".android.AppRegister"
+            android:permission="com.tencent.mm.plugin.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
+            </intent-filter>
+        </receiver>
+        <!-- weixin end -->
 
         <meta-data
             android:name="UMENG_APPKEY"
