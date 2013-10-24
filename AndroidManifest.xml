@@ -59,7 +59,7 @@
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5260c52156240bee00013d61__" />
+            android:value="5260c52156240bee00013d61" />
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="mvmap" />
