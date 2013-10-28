@@ -133,30 +133,52 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 		}
 	}
 
-	@Override
-	public void onClick(DialogInterface dialog, int which) {
+	private void sendWebPageToWX(String type) {
+
 		wxapi.registerApp(ConstWeixin.APP_ID);
 		WXWebpageObject webpage = new WXWebpageObject();
-		webpage.webpageUrl = mCurNews.getOrigin();
+		webpage.webpageUrl = mCurNews.getLink();
 		WXMediaMessage msg = new WXMediaMessage(webpage);
 		msg.title = mCurNews.getTitle();
-		//msg.description = ;
 		msg.thumbData = BitmapUtil.getBytesFromUrl(mCurNews.getImg());
 
 		SendMessageToWX.Req req = new SendMessageToWX.Req();
 		req.transaction = "webpage"+System.currentTimeMillis();
 		req.message = msg;
+
+		if(type.equals("timeline")){
+			req.scene = SendMessageToWX.Req.WXSceneTimeline;
+		}
+
+		wxapi.sendReq(req);
+	}
+
+	@Override
+	public void onClick(DialogInterface dialog, int which) {
+		Runnable task = null;
 		switch (which) {
 		case 0:
-			req.scene = SendMessageToWX.Req.WXSceneSession;
+			task = new Runnable() {
+				@Override
+				public void run() {
+					sendWebPageToWX("session");
+				}
+			};
 			break;
 		case 1:
-			req.scene = SendMessageToWX.Req.WXSceneTimeline;
+			task = new Runnable() {
+				@Override
+				public void run() {
+					sendWebPageToWX("timeline");
+				}
+			};
 			break;
 		default:
 			break;
 		}
-		wxapi.sendReq(req);
+		Thread t = new Thread(task);
+		t.start();
+
 	}
 
 

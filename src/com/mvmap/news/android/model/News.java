@@ -17,6 +17,7 @@ public class News {
 	private		int				catId;
 	@SerializedName("feed_name")
 	private		String			feedName;
+	private		String			link;
 
 
 
@@ -68,6 +69,12 @@ public class News {
 	public void setFeedName(String feedName) {
 		this.feedName = feedName;
 	}
-	
+	public void setLink(String link) {
+		this.link = link;
+	}
+	public String getLink() {
+		return link;
+	}
+
 
 }
