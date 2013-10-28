@@ -1,6 +1,7 @@
 package com.mvmap.news.android.adapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.holoeverywhere.widget.ProgressBar;
@@ -37,7 +38,8 @@ public class WebviewAdapter extends BaseAdapter{
 	public WebviewAdapter(DetailActivity mActivity, List<String> newsIdList) {
 		this.mActivity = mActivity;
 		this.newsIdList = newsIdList;
-		newsList = new ArrayList<News>(11); //下一页10条 + 当前的1条 == 11条
+		newsList = new ArrayList<News>(
+				Collections.<News>nCopies(11, null)); //下一页10条 + 当前的1条 == 11条
 	}
 
 	public News getCurNews(int position){
