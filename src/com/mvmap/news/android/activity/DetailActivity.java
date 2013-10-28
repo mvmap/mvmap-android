@@ -148,6 +148,7 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 		req.message = msg;
 		switch (which) {
 		case 0:
+			req.scene = SendMessageToWX.Req.WXSceneSession;
 			break;
 		case 1:
 			req.scene = SendMessageToWX.Req.WXSceneTimeline;

@@ -12,6 +12,7 @@ import org.apache.http.client.methods.HttpGet;
 
 import android.net.http.AndroidHttpClient;
 import android.text.TextUtils;
+import android.util.Log;
 
 public class BitmapUtil {
 
