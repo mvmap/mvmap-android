@@ -37,7 +37,7 @@ public class WebviewAdapter extends BaseAdapter{
 	public WebviewAdapter(DetailActivity mActivity, List<String> newsIdList) {
 		this.mActivity = mActivity;
 		this.newsIdList = newsIdList;
-		newsList = new ArrayList<News>();
+		newsList = new ArrayList<News>(11); //下一页10条 + 当前的1条 == 11条
 	}
 
 	public News getCurNews(int position){
@@ -84,7 +84,7 @@ public class WebviewAdapter extends BaseAdapter{
 		return new Listener<News>(){
 			@Override
 			public void onResponse(News news) {
-				newsList.add(position, news);
+				newsList.set(position, news);
 				holder.mWebview.loadDataWithBaseURL(null, createContent(news), 
 						mimeType, encoding, null);
 				holder.mProgressBar.setVisibility(View.GONE);

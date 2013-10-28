@@ -110,7 +110,7 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 			//				Intent intent = new Intent(Intent.ACTION_VIEW,uri);  
 			//				startActivity(intent);				
 			//			}
-			
+
 			mCurNews = mAdapter.getCurNews(mCurPosition);
 			if(mCurNews == null) return;
 			DialogFragment dialogFm = new ShareDialogFragment();
@@ -135,28 +135,27 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 
 	@Override
 	public void onClick(DialogInterface dialog, int which) {
+		wxapi.registerApp(ConstWeixin.APP_ID);
+		WXWebpageObject webpage = new WXWebpageObject();
+		webpage.webpageUrl = mCurNews.getOrigin();
+		WXMediaMessage msg = new WXMediaMessage(webpage);
+		msg.title = mCurNews.getTitle();
+		//msg.description = ;
+		msg.thumbData = BitmapUtil.getBytesFromUrl(mCurNews.getImg());
+
+		SendMessageToWX.Req req = new SendMessageToWX.Req();
+		req.transaction = "webpage"+System.currentTimeMillis();
+		req.message = msg;
 		switch (which) {
 		case 0:
 			break;
 		case 1:
-			wxapi.registerApp(ConstWeixin.APP_ID);
-			WXWebpageObject webpage = new WXWebpageObject();
-			webpage.webpageUrl = mCurNews.getOrigin();
-			WXMediaMessage msg = new WXMediaMessage(webpage);
-			msg.title = mCurNews.getTitle();
-			//msg.description = ;
-			msg.thumbData = BitmapUtil.getBytesFromUrl(mCurNews.getOrigin());
-
-			SendMessageToWX.Req req = new SendMessageToWX.Req();
 			req.scene = SendMessageToWX.Req.WXSceneTimeline;
-			req.transaction = "webpage"+System.currentTimeMillis();
-			req.message = msg;
-			wxapi.sendReq(req);
 			break;
 		default:
 			break;
 		}
-
+		wxapi.sendReq(req);
 	}
 
 
