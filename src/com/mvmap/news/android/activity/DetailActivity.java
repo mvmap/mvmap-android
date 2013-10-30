@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -137,10 +138,12 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 
 		wxapi.registerApp(ConstWeixin.APP_ID);
 		WXWebpageObject webpage = new WXWebpageObject();
-		webpage.webpageUrl = mCurNews.getLink();
+		webpage.webpageUrl = TextUtils.isEmpty(mCurNews.getLink()) ? mCurNews.getOrigin() : mCurNews.getLink();
 		WXMediaMessage msg = new WXMediaMessage(webpage);
 		msg.title = mCurNews.getTitle();
-		msg.thumbData = BitmapUtil.getBytesFromUrl(mCurNews.getImg());
+		if(mCurNews.getImg().contains("weixin")){
+			msg.thumbData = BitmapUtil.getBytesFromUrl(mCurNews.getImg());	
+		}
 
 		SendMessageToWX.Req req = new SendMessageToWX.Req();
 		req.transaction = "webpage"+System.currentTimeMillis();
