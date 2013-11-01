@@ -2,6 +2,7 @@
 <lint>
     <issue id="MissingTranslation">
         <ignore path="res/values/arrays.xml" />
+        <ignore path="res/values/pull_refresh_strings.xml" />
         <ignore path="res/values/strings.xml" />
     </issue>
 </lint>

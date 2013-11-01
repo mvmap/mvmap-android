@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:holo="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/abc_ic_search"
+        android:title="@string/abc_searchview_description_search"
+        holo:actionViewClass="android.support.v7.widget.SearchView"
+        holo:showAsAction="always|collapseActionView"/>
+    <item
+        android:icon="@drawable/abc_ic_go"
+        android:title="@string/skin_theme"
+        holo:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/skin_light"
+                android:title="@string/skin_light"/>
+            <item
+                android:id="@+id/skin_dark"
+                android:title="@string/skin_dark"/>
+            <item
+                android:id="@+id/skin_mixed"
+                android:title="@string/skin_mixed"/>
+        </menu>
+    </item>
+
+</menu>

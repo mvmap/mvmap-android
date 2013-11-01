@@ -18,15 +18,15 @@ import android.widget.ListView;
 import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.mvmap.news.R;
 import com.mvmap.news.android.activity.DetailActivity;
 import com.mvmap.news.android.adapter.NewsListAdapter;
 import com.mvmap.news.android.model.Tweet;
+import com.mvmap.news.android.pullrefresh.PullToRefreshBase;
+import com.mvmap.news.android.pullrefresh.PullToRefreshBase.Mode;
+import com.mvmap.news.android.pullrefresh.PullToRefreshBase.OnRefreshListener2;
 import com.mvmap.news.android.request.MvmapNewsManager;
+import com.mvmap.news.android.view.PullToRefreshListView;
 
 public class MainFragment extends Fragment implements OnRefreshListener2<ListView>, OnItemClickListener{
 
@@ -100,6 +100,7 @@ public class MainFragment extends Fragment implements OnRefreshListener2<ListVie
 		return new Listener<List<Tweet>>(){
 			@Override
 			public void onResponse(List<Tweet> list) {
+				if(getActivity() == null) return;
 				if(mAdapter == null){
 					mAdapter = new NewsListAdapter(getActivity(), list);
 					mListView.setAdapter(mAdapter);	

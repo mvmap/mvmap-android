@@ -9,5 +9,9 @@
     <string name="text_size_largest">最大</string>
     <string name="dialog_share_title">分享到&#8230;</string>
     
+    <string name="skin_theme">主题</string>
+    <string name="skin_light">明亮</string>
+    <string name="skin_dark">黑暗</string>
+    <string name="skin_mixed">混合</string>
 
 </resources>
