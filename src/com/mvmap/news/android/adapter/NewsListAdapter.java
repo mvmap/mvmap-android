@@ -28,6 +28,9 @@ public class NewsListAdapter extends BaseAdapter{
 	public void addList(List<Tweet> newlist){
 		dataList.addAll(newlist);
 	}
+	public List<Tweet> getAllList(){
+		return dataList;
+	}
 
 	public void clear(){
 		if(dataList != null){

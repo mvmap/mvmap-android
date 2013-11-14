@@ -1,12 +1,13 @@
 package com.mvmap.news.android.activity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.addon.AddonSlider;
 import org.holoeverywhere.addon.AddonSlider.AddonSliderA;
+import org.holoeverywhere.addon.Addons;
 import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.app.Activity.Addons;
 import org.holoeverywhere.slider.SliderMenu;
 
 import android.os.Bundle;
@@ -27,7 +28,7 @@ import com.mvmap.news.android.request.MvmapNewsManager;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
-@Addons(Activity.ADDON_SLIDER)
+@Addons(AddonSlider.class)
 public class MainActivity extends Activity{
 
 	private final String TAG = getClass().getSimpleName();
@@ -35,6 +36,8 @@ public class MainActivity extends Activity{
 
 	private SliderMenu 					mSliderMenu;
 	private	DClickExit					mDbclickExit;
+
+	private ArrayList<Category>				categoryList;
 
 	public AddonSliderA addonSlider() {
 		return addon(AddonSlider.class);
@@ -45,28 +48,47 @@ public class MainActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		UmengUpdateAgent.update(this);
 		getSupportActionBar().setTitle(R.string.app_name);
-		mSliderMenu = addonSlider().obtainDefaultSliderMenu(R.menu.main_left_menu);
-
-		MvmapNewsManager.getInstance().getNewsCategory(createMyReqSuccessListener(), 
-				createMyReqErrorListener());
+		mSliderMenu = addonSlider().obtainDefaultSliderMenu(R.layout.main_left_menu);
+		
+		if(savedInstanceState != null){
+			categoryList = savedInstanceState.getParcelableArrayList("categoryList");
+			createSliderMenu(categoryList);
+		}else{
+			categoryList = new ArrayList<Category>();
+			MvmapNewsManager.getInstance().getNewsCategory(createMyReqSuccessListener(), 
+					createMyReqErrorListener());			
+		}
 
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putParcelableArrayList("categoryList", categoryList);	
+		super.onSaveInstanceState(outState);
+	}
+
+	
+	private void createSliderMenu(List<Category> list){
+		if(list == null || list.size() == 0) return;
+		for(Category category : list){
+			categoryList.add(category);
+			Bundle fragmentArguments = new Bundle();
+			fragmentArguments.putString("name", category.getCategoryName());
+			fragmentArguments.putInt("id", category.getCategoryId());
+
+			mSliderMenu.add(category.getCategoryName(), MainFragment.class, 
+					fragmentArguments, SliderMenu.BLUE);
+		}
+		mSliderMenu.setCurrentPage(0);
+		
+	}
 
 	private Listener<List<Category>> createMyReqSuccessListener(){
 
 		return new Listener<List<Category>>(){
 			@Override
 			public void onResponse(List<Category> list) {
-				for(Category category : list){
-					Bundle fragmentArguments = new Bundle();
-					fragmentArguments.putString("name", category.getCategoryName());
-					fragmentArguments.putInt("id", category.getCategoryId());
-
-					mSliderMenu.add(category.getCategoryName(), MainFragment.class, 
-							fragmentArguments, SliderMenu.BLUE);
-				}
-				mSliderMenu.setCurrentPage(0);
+				createSliderMenu(list);
 			}
 		};
 	}

@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:holo="http://schemas.android.com/apk/res-auto" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/action_search"
-        android:icon="@drawable/abc_ic_search"
-        android:title="@string/abc_searchview_description_search"
-        holo:actionViewClass="android.support.v7.widget.SearchView"
-        holo:showAsAction="always|collapseActionView"/>
-    <item
-        android:icon="@drawable/abc_ic_go"
-        android:title="@string/skin_theme"
-        holo:showAsAction="ifRoom">
+        android:icon="@drawable/abc_ic_menu_moreoverflow_normal_holo_light"
+        android:showAsAction="ifRoom"
+        android:title="@string/skin_theme">
         <menu>
             <item
                 android:id="@+id/skin_light"

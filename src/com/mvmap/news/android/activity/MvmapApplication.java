@@ -2,7 +2,6 @@ package com.mvmap.news.android.activity;
 
 import org.holoeverywhere.HoloEverywhere;
 import org.holoeverywhere.HoloEverywhere.PreferenceImpl;
-import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.ThemeManager;
 import org.holoeverywhere.app.Application;
 
@@ -17,13 +16,9 @@ import com.mvmap.news.android.request.RequestManager;
 
 public class MvmapApplication extends Application{
 	
-    private static final String PACKAGE = MvmapApplication.class.getPackage().getName();
 
     static {
-        HoloEverywhere.DEBUG = true;
         HoloEverywhere.PREFERENCE_IMPL = PreferenceImpl.JSON;
-
-        LayoutInflater.registerPackage(PACKAGE + ".widget");
 
         ThemeManager.setDefaultTheme(ThemeManager.LIGHT);
 

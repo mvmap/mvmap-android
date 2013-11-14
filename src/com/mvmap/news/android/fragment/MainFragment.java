@@ -43,9 +43,16 @@ public class MainFragment extends Fragment implements OnRefreshListener2<ListVie
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Bundle args = getArguments();
-		title = args.getString("name");
-		catId = args.getInt("id");
+		if(savedInstanceState != null){
+			title = savedInstanceState.getString("name");
+			catId = savedInstanceState.getInt("id");	
+			start = savedInstanceState.getInt("start");
+		}else{
+			Bundle args = getArguments();
+			title = args.getString("name");
+			catId = args.getInt("id");		
+		}
+
 	}
 
 
@@ -59,22 +66,38 @@ public class MainFragment extends Fragment implements OnRefreshListener2<ListVie
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		if(mListView == null){
-			mListView = (PullToRefreshListView)getView().findViewById(R.id.pull_to_refresh_listview);
-			mListView.setOnRefreshListener(this);
-			mListView.setOnItemClickListener(this);
-			mProgressBar = (ProgressBar)getView().findViewById(R.id.main_loading);
-			mProgressBar.setVisibility(View.VISIBLE);
+
+		mListView = (PullToRefreshListView)getView().findViewById(R.id.pull_to_refresh_listview);
+		mListView.setOnRefreshListener(this);
+		mListView.setOnItemClickListener(this);
+		mProgressBar = (ProgressBar)getView().findViewById(R.id.main_loading);
+		mProgressBar.setVisibility(View.VISIBLE);
+		if(savedInstanceState != null){
+			ArrayList<Tweet> list = savedInstanceState.getParcelableArrayList("tweet_list"); 
+			createPullListView(list);
+		}else{
 			MvmapNewsManager.getInstance().getNewsList(createMyReqSuccessListener(), 
-					createMyReqErrorListener(), catId, start);
+					createMyReqErrorListener(), catId, start);	
 		}
-		
+
 	}
 	@Override
 	public void onResume() {
 		super.onResume();
 		getSupportActionBar().setSubtitle(title);
 
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		outState.putInt("id", catId);
+		outState.putString("name", title);
+		outState.putInt("start", start);
+		if(mAdapter != null && mAdapter.getAllList() != null){
+			outState.putParcelableArrayList("tweet_list", 
+					new ArrayList<Tweet>(mAdapter.getAllList()));
+		}
+		super.onSaveInstanceState(outState);
 	}
 
 	@Override
@@ -94,24 +117,28 @@ public class MainFragment extends Fragment implements OnRefreshListener2<ListVie
 		MvmapNewsManager.getInstance().getNewsList(createMyReqSuccessListener(), 
 				createMyReqErrorListener(), catId, start);
 	}
+	
+	private void createPullListView(List<Tweet> list){
+		if(getActivity() == null) return;
+		if(mAdapter == null){
+			mAdapter = new NewsListAdapter(getActivity(), list);
+			mListView.setAdapter(mAdapter);	
+		}else{
+			mAdapter.addList(list);
+			mAdapter.notifyDataSetChanged();	
+		}
+		mListView.onRefreshComplete();
+		mProgressBar.setVisibility(View.GONE);
+		start+=10;
+		mListView.setMode(Mode.BOTH);
+	}
 
 	private Listener<List<Tweet>> createMyReqSuccessListener(){
 
 		return new Listener<List<Tweet>>(){
 			@Override
 			public void onResponse(List<Tweet> list) {
-				if(getActivity() == null) return;
-				if(mAdapter == null){
-					mAdapter = new NewsListAdapter(getActivity(), list);
-					mListView.setAdapter(mAdapter);	
-				}else{
-					mAdapter.addList(list);
-					mAdapter.notifyDataSetChanged();	
-				}
-				mListView.onRefreshComplete();
-				mProgressBar.setVisibility(View.GONE);
-				start+=10;
-				mListView.setMode(Mode.BOTH);
+				createPullListView(list);
 			}
 		};
 	}

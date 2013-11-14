@@ -15,6 +15,7 @@
  *******************************************************************************/
 package com.mvmap.news.android.view;
 
+
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
