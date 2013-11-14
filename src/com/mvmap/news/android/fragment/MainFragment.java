@@ -16,6 +16,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.android.volley.Response;
+import com.android.volley.VolleyLog;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.mvmap.news.R;
@@ -42,6 +43,7 @@ public class MainFragment extends Fragment implements OnRefreshListener2<ListVie
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		VolleyLog.v(TAG+" %s", "onCreate");
 		super.onCreate(savedInstanceState);
 		if(savedInstanceState != null){
 			title = savedInstanceState.getString("name");
@@ -59,12 +61,14 @@ public class MainFragment extends Fragment implements OnRefreshListener2<ListVie
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		VolleyLog.v(TAG+" %s", "onCreateView");
 		return inflater.inflate(R.layout.main_fragment);
 	}
 
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
+		VolleyLog.v(TAG+" %s", "onActivityCreated");
 		super.onActivityCreated(savedInstanceState);
 
 		mListView = (PullToRefreshListView)getView().findViewById(R.id.pull_to_refresh_listview);
@@ -87,9 +91,16 @@ public class MainFragment extends Fragment implements OnRefreshListener2<ListVie
 		getSupportActionBar().setSubtitle(title);
 
 	}
+	
+	@Override
+	public void onDestroy() {
+		VolleyLog.v(TAG+" %s", "onDestroy");
+		super.onDestroy();
+	}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
+		VolleyLog.v(TAG+" %s", "onSaveInstanceState");
 		outState.putInt("id", catId);
 		outState.putString("name", title);
 		outState.putInt("start", start);

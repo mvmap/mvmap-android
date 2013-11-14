@@ -8,6 +8,7 @@ import org.holoeverywhere.addon.AddonSlider;
 import org.holoeverywhere.addon.AddonSlider.AddonSliderA;
 import org.holoeverywhere.addon.Addons;
 import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.preference.SharedPreferences;
 import org.holoeverywhere.slider.SliderMenu;
 
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.mvmap.news.R;
 import com.mvmap.news.android.common.DClickExit;
 import com.mvmap.news.android.fragment.MainFragment;
@@ -45,6 +47,7 @@ public class MainActivity extends Activity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		VolleyLog.v(TAG+" %s", "onCreate");
 		super.onCreate(savedInstanceState);
 		UmengUpdateAgent.update(this);
 		getSupportActionBar().setTitle(R.string.app_name);
@@ -52,11 +55,17 @@ public class MainActivity extends Activity{
 		
 		if(savedInstanceState != null){
 			categoryList = savedInstanceState.getParcelableArrayList("categoryList");
-			createSliderMenu(categoryList);
+			createSliderMenu(categoryList, false);
 		}else{
-			categoryList = new ArrayList<Category>();
-			MvmapNewsManager.getInstance().getNewsCategory(createMyReqSuccessListener(), 
-					createMyReqErrorListener());			
+			Bundle bundle = getIntent().getBundleExtra(ThemeManager.KEY_INSTANCE_STATE);
+			if(bundle!=null){
+				categoryList = bundle.getParcelableArrayList("categoryList");
+				createSliderMenu(categoryList, false);
+			}else{
+				categoryList = new ArrayList<Category>();
+				MvmapNewsManager.getInstance().getNewsCategory(createMyReqSuccessListener(), 
+						createMyReqErrorListener());	
+			}
 		}
 
 	}
@@ -68,10 +77,13 @@ public class MainActivity extends Activity{
 	}
 
 	
-	private void createSliderMenu(List<Category> list){
+	private void createSliderMenu(List<Category> list, boolean isFirstLoad){
 		if(list == null || list.size() == 0) return;
+		
 		for(Category category : list){
-			categoryList.add(category);
+			if(isFirstLoad){
+				categoryList.add(category);	
+			}
 			Bundle fragmentArguments = new Bundle();
 			fragmentArguments.putString("name", category.getCategoryName());
 			fragmentArguments.putInt("id", category.getCategoryId());
@@ -79,7 +91,9 @@ public class MainActivity extends Activity{
 			mSliderMenu.add(category.getCategoryName(), MainFragment.class, 
 					fragmentArguments, SliderMenu.BLUE);
 		}
-		mSliderMenu.setCurrentPage(0);
+		if(isFirstLoad){
+			mSliderMenu.setCurrentPage(0);	
+		}
 		
 	}
 
@@ -88,7 +102,7 @@ public class MainActivity extends Activity{
 		return new Listener<List<Category>>(){
 			@Override
 			public void onResponse(List<Category> list) {
-				createSliderMenu(list);
+				createSliderMenu(list, true);
 			}
 		};
 	}
@@ -129,9 +143,13 @@ public class MainActivity extends Activity{
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		SharedPreferences mPerferences = getDefaultSharedPreferences(); 
+		SharedPreferences.Editor mEditor = mPerferences.edit();
 		switch (item.getItemId()) {
 		case R.id.skin_light:
 			if(ThemeManager.getDefaultTheme() != ThemeManager.LIGHT){
+				mEditor.putInt("theme", ThemeManager.LIGHT);
+				mEditor.commit();
 				ThemeManager.setDefaultTheme(ThemeManager.LIGHT);
 				ThemeManager.restart(this, false);
 			}
@@ -139,12 +157,16 @@ public class MainActivity extends Activity{
 
 		case R.id.skin_dark:
 			if(ThemeManager.getDefaultTheme() != ThemeManager.DARK){
+				mEditor.putInt("theme", ThemeManager.DARK);
+				mEditor.commit();
 				ThemeManager.setDefaultTheme(ThemeManager.DARK);
 				ThemeManager.restart(this, false);
 			}
 			return true;
 		case R.id.skin_mixed:
 			if(ThemeManager.getDefaultTheme() != ThemeManager.MIXED){
+				mEditor.putInt("theme", ThemeManager.MIXED);
+				mEditor.commit();
 				ThemeManager.setDefaultTheme(ThemeManager.MIXED);
 				ThemeManager.restart(this, false);
 			}

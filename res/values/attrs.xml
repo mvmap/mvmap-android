@@ -136,6 +136,9 @@
         <attr name="ptrDrawableBottom" format="reference" />
     </declare-styleable>
     
+    <attr name="ic_menu_more_draw" format="reference" />
+    <attr name="detail_bottom_background" format="reference|color" />
+    
     
     
 </resources>

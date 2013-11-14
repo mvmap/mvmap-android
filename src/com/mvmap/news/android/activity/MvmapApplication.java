@@ -15,47 +15,41 @@ import com.mvmap.news.android.images.ImageCacheManager.CacheType;
 import com.mvmap.news.android.request.RequestManager;
 
 public class MvmapApplication extends Application{
-	
 
-    static {
-        HoloEverywhere.PREFERENCE_IMPL = PreferenceImpl.JSON;
-
-        ThemeManager.setDefaultTheme(ThemeManager.LIGHT);
-
-        // Android 2.* incorrect process FULLSCREEN flag when we are modify
-        // DecorView of Window. This hack using HoloEverywhere Slider
-        if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
-            ThemeManager.modify(ThemeManager.FULLSCREEN);
-        }
-
-        ThemeManager.map(ThemeManager.DARK,
-                R.style.Holo_Demo_Theme);
-        ThemeManager.map(ThemeManager.LIGHT,
-                R.style.Holo_Demo_Theme_Light);
-        ThemeManager.map(ThemeManager.MIXED,
-                R.style.Holo_Demo_Theme_Light_DarkActionBar);
-
-        ThemeManager.map(ThemeManager.DARK | ThemeManager.FULLSCREEN,
-                R.style.Holo_Demo_Theme_Fullscreen);
-        ThemeManager.map(ThemeManager.LIGHT | ThemeManager.FULLSCREEN,
-                R.style.Holo_Demo_Theme_Light_Fullscreen);
-        ThemeManager.map(ThemeManager.MIXED | ThemeManager.FULLSCREEN,
-                R.style.Holo_Demo_Theme_Light_DarkActionBar_Fullscreen);
-        
-        
-        
-    }
-    
-    
-    private static int DISK_IMAGECACHE_SIZE = 1024*1024*10;
+	private static int DISK_IMAGECACHE_SIZE = 1024*1024*10;
 	private static CompressFormat DISK_IMAGECACHE_COMPRESS_FORMAT = CompressFormat.JPEG;
-	
+
 	//PNG is lossless so quality is ignored but must be provided
 	private static int DISK_IMAGECACHE_QUALITY = 80;  
-	
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		HoloEverywhere.PREFERENCE_IMPL = PreferenceImpl.JSON;
+		
+		int themeId = getDefaultSharedPreferences().getInt("theme", ThemeManager.LIGHT);
+		ThemeManager.setDefaultTheme(themeId);
+
+		// Android 2.* incorrect process FULLSCREEN flag when we are modify
+		// DecorView of Window. This hack using HoloEverywhere Slider
+		if (VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) {
+			ThemeManager.modify(ThemeManager.FULLSCREEN);
+		}
+
+		ThemeManager.map(ThemeManager.DARK,
+				R.style.Holo_Demo_Theme);
+		ThemeManager.map(ThemeManager.LIGHT,
+				R.style.Holo_Demo_Theme_Light);
+		ThemeManager.map(ThemeManager.MIXED,
+				R.style.Holo_Demo_Theme_Light_DarkActionBar);
+
+		ThemeManager.map(ThemeManager.DARK | ThemeManager.FULLSCREEN,
+				R.style.Holo_Demo_Theme_Fullscreen);
+		ThemeManager.map(ThemeManager.LIGHT | ThemeManager.FULLSCREEN,
+				R.style.Holo_Demo_Theme_Light_Fullscreen);
+		ThemeManager.map(ThemeManager.MIXED | ThemeManager.FULLSCREEN,
+				R.style.Holo_Demo_Theme_Light_DarkActionBar_Fullscreen);
+
 
 		_init();
 	}
@@ -67,7 +61,7 @@ public class MvmapApplication extends Application{
 		RequestManager.init(this);
 		createImageCache();
 	}
-	
+
 	/**
 	 * Create the image cache. Uses Memory Cache by default. Change to Disk for a Disk based LRU implementation.  
 	 */

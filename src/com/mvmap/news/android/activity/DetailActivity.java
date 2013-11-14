@@ -65,10 +65,8 @@ public class DetailActivity extends Activity implements OnClickListener, OnMenuI
 
 	@Override
 	protected void onCreate(Bundle sSavedInstanceState) {
-
-		ThemeManager.removeTheme(this);
-		setTheme(ThemeManager.DIALOG_WHEN_LARGE | ThemeManager.NO_ACTION_BAR, false);
 		super.onCreate(sSavedInstanceState);
+		getSupportActionBar().hide();
 		setContentView(R.layout.activity_detail);
 
 		wxapi = WXAPIFactory.createWXAPI(this, ConstWeixin.APP_ID, false);

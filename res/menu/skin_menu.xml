@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:icon="@drawable/abc_ic_menu_moreoverflow_normal_holo_light"
+        android:icon="?attr/ic_menu_more_draw"
         android:showAsAction="ifRoom"
         android:title="@string/skin_theme">
         <menu>

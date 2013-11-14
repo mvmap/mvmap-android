@@ -27,6 +27,8 @@
         <!-- Include block: DemoThemeBar -->
         <!-- End of block DemoThemeBar -->
         <!-- End of block DemoThemeBarDark -->
+        <item name="ic_menu_more_draw">@drawable/abc_ic_menu_moreoverflow_normal_holo_dark</item>
+        <item name="detail_bottom_background">@color/background_holo_dark</item>
     </style>
 
     <style name="Holo.Demo.Theme.Fullscreen">
@@ -36,6 +38,7 @@
         <item name="android:windowFullscreen">true</item>
         <item name="windowContentOverlay">@null</item>
         <!-- End of block Fullscreen -->
+
     </style>
 
     <style name="Holo.Demo.Theme.Light" parent="Holo.Theme.Light">
@@ -51,6 +54,8 @@
         <!-- Include block: DemoThemeBar -->
         <!-- End of block DemoThemeBar -->
         <!-- End of block DemoThemeBarLight -->
+        <item name="ic_menu_more_draw">@drawable/abc_ic_menu_moreoverflow_normal_holo_light</item>
+        <item name="detail_bottom_background">@color/background_holo_light</item>
     </style>
 
     <style name="Holo.Demo.Theme.Light.DarkActionBar" parent="Holo.Theme.Light.DarkActionBar">
@@ -66,6 +71,8 @@
         <!-- Include block: DemoThemeBar -->
         <!-- End of block DemoThemeBar -->
         <!-- End of block DemoThemeBarDark -->
+        <item name="ic_menu_more_draw">@drawable/abc_ic_menu_moreoverflow_normal_holo_dark</item>
+        <item name="detail_bottom_background">@color/background_holo_dark</item>
     </style>
 
     <style name="Holo.Demo.Theme.Light.DarkActionBar.Fullscreen">
@@ -75,6 +82,7 @@
         <item name="android:windowFullscreen">true</item>
         <item name="windowContentOverlay">@null</item>
         <!-- End of block Fullscreen -->
+
     </style>
 
     <style name="Holo.Demo.Theme.Light.Fullscreen">
@@ -84,6 +92,7 @@
         <item name="android:windowFullscreen">true</item>
         <item name="windowContentOverlay">@null</item>
         <!-- End of block Fullscreen -->
+
     </style>
 
 </resources>
