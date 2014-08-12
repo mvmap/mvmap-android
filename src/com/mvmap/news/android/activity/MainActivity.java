@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.holoeverywhere.addon.AddonSlider;
 import org.holoeverywhere.addon.AddonSlider.AddonSliderA;
+import org.holoeverywhere.addon.Addons;
 import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.app.Activity.Addons;
 import org.holoeverywhere.slider.SliderMenu;
 
 import android.os.Bundle;
@@ -23,7 +23,7 @@ import com.mvmap.news.android.request.MvmapNewsManager;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
-@Addons(Activity.ADDON_SLIDER)
+@Addons(AddonSlider.class)
 public class MainActivity extends Activity{
 
 	private final String TAG = getClass().getSimpleName();
