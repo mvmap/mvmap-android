@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
@@ -11,3 +12,18 @@
     <string name="more">more</string>
 
 </resources>
+=======
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">极客新闻</string>
+    <string name="text_size_smallest">最小</string>
+    <string name="text_size_smaller">略小</string>
+    <string name="text_size_normal">正常</string>
+    <string name="text_size_larger">略大</string>
+    <string name="text_size_largest">最大</string>
+    <string name="dialog_share_title">分享到&#8230;</string>
+    
+
+</resources>
+>>>>>>> 19015a267d4e02daf687cc5b6b3f15740cb149e1

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD
 	<name>mvmap-android</name>
+=======
+	<name>mvmap-new-android</name>
+>>>>>>> 19015a267d4e02daf687cc5b6b3f15740cb149e1
 	<comment></comment>
 	<projects>
 	</projects>

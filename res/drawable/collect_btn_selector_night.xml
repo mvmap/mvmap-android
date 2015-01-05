@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/night_mode_text_page_tool_bar_collect_btn" android:state_checked="false"/>
+    <item android:drawable="@drawable/night_mode_text_page_tool_bar_collect_btn_selected" android:state_checked="true"/>
+    <item android:drawable="@drawable/night_mode_text_page_tool_bar_collect_btn"/>
+
+</selector>

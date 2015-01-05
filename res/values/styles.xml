@@ -1,5 +1,6 @@
 <resources>
 
+<<<<<<< HEAD
     <!--
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
@@ -30,3 +31,7 @@
     </style>
 
 </resources>
+=======
+
+</resources>
+>>>>>>> 19015a267d4e02daf687cc5b6b3f15740cb149e1

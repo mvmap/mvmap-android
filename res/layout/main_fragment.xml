@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/pull_to_refresh_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top|center"
+        android:dividerHeight="10dp"
+        ptr:ptrAnimationStyle="rotate"
+        ptr:ptrHeaderBackground="#80A1A1A1"
+        ptr:ptrHeaderTextAppearance="?android:textAppearanceSmall"
+        ptr:ptrMode="disabled"
+        ptr:ptrOverScroll="false" />
+
+    <ProgressBar
+        android:id="@+id/main_loading"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+</FrameLayout>
