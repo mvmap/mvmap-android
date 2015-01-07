@@ -18,3 +18,44 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+#-keepclassmembers enum * {
+# public static **[] values();
+# public static ** valueOf(java.lang.String);
+#}
+
+#-keepattributes Annotation
+#-keepattributes EnclosingMethod
+
+
+##---------------Begin: proguard configuration for Gson  ----------
+# Gson uses generic type information stored in a class file when working with fields. Proguard
+# removes such information by default, so configure it to keep all of it.
+-keepattributes Signature
+
+# Gson specific classes
+-keep class sun.misc.Unsafe { *; }
+-keep class com.google.gson.stream.** { *; }
+-keep class com.google.gson.examples.android.model.** { *; } 
+-keep class com.google.gson.** { *;}
+
+# Application classes that will be serialized/deserialized over Gson
+-keep class com.mvmap.news.android.model.** { *; }
+#-keep class com.mvmap.news.android.request.** { *; }
+-keep class com.mvmap.news.android.request.GsonRequest
+##---------------End: proguard configuration for Gson  ----------
+
+
+-libraryjars /libs/disklrucache-2.0.1.jar
+-libraryjars /libs/gson-2.2.4.jar
+-libraryjars /libs/libammsdk.jar
+-libraryjars /libs/mta-sdk-1.6.2.jar
+-libraryjars /libs/umeng_sdk.jar
+
+-keep class com.umeng.** {*;}
+-keep class org.holoeverywhere.** {*;}
+-keep class com.tencent.** {*;}
+-keep class com.android.** {*;}
+-keep class org.apache.** {*;}
+-keep class android.support.** {*;}
+-keep class org.json.** {*;}

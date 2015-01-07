@@ -28,6 +28,9 @@ public class NewsListAdapter extends BaseAdapter{
 	public void addList(List<Tweet> newlist){
 		dataList.addAll(newlist);
 	}
+	public List<Tweet> getAllList(){
+		return dataList;
+	}
 
 	public void clear(){
 		if(dataList != null){
@@ -66,7 +69,7 @@ public class NewsListAdapter extends BaseAdapter{
 	public View getView(int position, View convertView, ViewGroup arg2) {
 		ViewHolder holder;
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.list_item, null);
+			convertView = inflater.inflate(R.layout.list_item2, null);
 			holder = new ViewHolder();
 			holder.imageView = (NetworkImageView) convertView.findViewById(R.id.img);
 			holder.titleTextView = (TextView) convertView.findViewById(R.id.txt_title);

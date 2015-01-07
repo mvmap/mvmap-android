@@ -40,9 +40,9 @@ public class MvmapNewsManager {
 	 * @param errorListener
 	 */
 	public void getNewsCategory(Listener<List<Category>> listener, ErrorListener errorListener){
-		String url = Uri.parse(HTTPREQ.NEWS_CATEGORY.base).buildUpon().build().toString();
+		String url = Uri.parse(HTTPREQ.NEWS_CATEGORY_REST.base).buildUpon().build().toString();
 		GsonRequest<List<Category>> request = new GsonRequest<List<Category>>(
-				HTTPREQ.NEWS_CATEGORY.reqtype
+				HTTPREQ.NEWS_CATEGORY_REST.reqtype
 				, url
 				, new TypeToken<List<Category>>(){}.getType()
 				, listener
@@ -62,14 +62,14 @@ public class MvmapNewsManager {
 	public void getNewsList(Listener<List<Tweet>> listener, ErrorListener errorListener, 
 			int catId, int start){
 
-		Uri.Builder uriBuilder = Uri.parse(HTTPREQ.NEWS_LIST.base).buildUpon()
+		Uri.Builder uriBuilder = Uri.parse(HTTPREQ.NEWS_LIST_REST.base).buildUpon()
 				.appendQueryParameter("lang", "zh")
 				.appendQueryParameter("start", String.valueOf(start))
 				.appendQueryParameter("cat_id", String.valueOf(catId));
 
 		String url = uriBuilder.build().toString();
 		GsonRequest<List<Tweet>> request = new GsonRequest<List<Tweet>>(
-				HTTPREQ.NEWS_LIST.reqtype
+				HTTPREQ.NEWS_LIST_REST.reqtype
 				, url
 				, new TypeToken<List<Tweet>>(){}.getType()
 				, listener
@@ -81,11 +81,11 @@ public class MvmapNewsManager {
 
 
 	public void getNewsItem(Listener<News> listener, ErrorListener errorListener, String newsId){
-		Uri.Builder uriBuilder = Uri.parse(HTTPREQ.NEWS_ITEM.base).buildUpon();
+		Uri.Builder uriBuilder = Uri.parse(HTTPREQ.NEWS_ITEM_REST.base).buildUpon();
 		String url = String.format(uriBuilder.build().toString(), newsId);
 
 		GsonRequest<News> request = new GsonRequest<News>(
-				HTTPREQ.NEWS_ITEM.reqtype
+				HTTPREQ.NEWS_ITEM_REST.reqtype
 				, url
 				, new TypeToken<News>(){}.getType()
 				, listener

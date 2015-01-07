@@ -16,17 +16,18 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.android.volley.Response;
+import com.android.volley.VolleyLog;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.mvmap.news.R;
 import com.mvmap.news.android.activity.DetailActivity;
 import com.mvmap.news.android.adapter.NewsListAdapter;
 import com.mvmap.news.android.model.Tweet;
+import com.mvmap.news.android.pullrefresh.PullToRefreshBase;
+import com.mvmap.news.android.pullrefresh.PullToRefreshBase.Mode;
+import com.mvmap.news.android.pullrefresh.PullToRefreshBase.OnRefreshListener2;
 import com.mvmap.news.android.request.MvmapNewsManager;
+import com.mvmap.news.android.view.PullToRefreshListView;
 
 public class MainFragment extends Fragment implements OnRefreshListener2<ListView>, OnItemClickListener{
 
@@ -42,39 +43,72 @@ public class MainFragment extends Fragment implements OnRefreshListener2<ListVie
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		VolleyLog.v(TAG+" %s", "onCreate");
 		super.onCreate(savedInstanceState);
-		Bundle args = getArguments();
-		title = args.getString("name");
-		catId = args.getInt("id");
+		if(savedInstanceState != null){
+			title = savedInstanceState.getString("name");
+			catId = savedInstanceState.getInt("id");	
+			start = savedInstanceState.getInt("start");
+		}else{
+			Bundle args = getArguments();
+			title = args.getString("name");
+			catId = args.getInt("id");		
+		}
+
 	}
 
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		VolleyLog.v(TAG+" %s", "onCreateView");
 		return inflater.inflate(R.layout.main_fragment);
 	}
 
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
+		VolleyLog.v(TAG+" %s", "onActivityCreated");
 		super.onActivityCreated(savedInstanceState);
-		if(mListView == null){
-			mListView = (PullToRefreshListView)getView().findViewById(R.id.pull_to_refresh_listview);
-			mListView.setOnRefreshListener(this);
-			mListView.setOnItemClickListener(this);
-			mProgressBar = (ProgressBar)getView().findViewById(R.id.main_loading);
-			mProgressBar.setVisibility(View.VISIBLE);
+
+		mListView = (PullToRefreshListView)getView().findViewById(R.id.pull_to_refresh_listview);
+		mListView.setOnRefreshListener(this);
+		mListView.setOnItemClickListener(this);
+		mProgressBar = (ProgressBar)getView().findViewById(R.id.main_loading);
+		mProgressBar.setVisibility(View.VISIBLE);
+		if(savedInstanceState != null){
+			ArrayList<Tweet> list = savedInstanceState.getParcelableArrayList("tweet_list"); 
+			createPullListView(list);
+		}else{
 			MvmapNewsManager.getInstance().getNewsList(createMyReqSuccessListener(), 
-					createMyReqErrorListener(), catId, start);
+					createMyReqErrorListener(), catId, start);	
 		}
-		
+
 	}
 	@Override
 	public void onResume() {
 		super.onResume();
 		getSupportActionBar().setSubtitle(title);
 
+	}
+	
+	@Override
+	public void onDestroy() {
+		VolleyLog.v(TAG+" %s", "onDestroy");
+		super.onDestroy();
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		VolleyLog.v(TAG+" %s", "onSaveInstanceState");
+		outState.putInt("id", catId);
+		outState.putString("name", title);
+		outState.putInt("start", start);
+		if(mAdapter != null && mAdapter.getAllList() != null){
+			outState.putParcelableArrayList("tweet_list", 
+					new ArrayList<Tweet>(mAdapter.getAllList()));
+		}
+		super.onSaveInstanceState(outState);
 	}
 
 	@Override
@@ -94,23 +128,28 @@ public class MainFragment extends Fragment implements OnRefreshListener2<ListVie
 		MvmapNewsManager.getInstance().getNewsList(createMyReqSuccessListener(), 
 				createMyReqErrorListener(), catId, start);
 	}
+	
+	private void createPullListView(List<Tweet> list){
+		if(getActivity() == null) return;
+		if(mAdapter == null){
+			mAdapter = new NewsListAdapter(getActivity(), list);
+			mListView.setAdapter(mAdapter);	
+		}else{
+			mAdapter.addList(list);
+			mAdapter.notifyDataSetChanged();	
+		}
+		mListView.onRefreshComplete();
+		mProgressBar.setVisibility(View.GONE);
+		start+=10;
+		mListView.setMode(Mode.BOTH);
+	}
 
 	private Listener<List<Tweet>> createMyReqSuccessListener(){
 
 		return new Listener<List<Tweet>>(){
 			@Override
 			public void onResponse(List<Tweet> list) {
-				if(mAdapter == null){
-					mAdapter = new NewsListAdapter(getActivity(), list);
-					mListView.setAdapter(mAdapter);	
-				}else{
-					mAdapter.addList(list);
-					mAdapter.notifyDataSetChanged();	
-				}
-				mListView.onRefreshComplete();
-				mProgressBar.setVisibility(View.GONE);
-				start+=10;
-				mListView.setMode(Mode.BOTH);
+				createPullListView(list);
 			}
 		};
 	}

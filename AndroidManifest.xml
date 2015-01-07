@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mvmap.news"
     android:installLocation="auto"
-    android:versionCode="2"
-    android:versionName="0.2" >
+    android:versionCode="6"
+    android:versionName="1.6.1" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -14,6 +14,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--允许应用访问范围(如WIFI)性的定位-->
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<!--允许应用访问精确(如GPS)性的定位-->
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".android.activity.MvmapApplication"
@@ -57,12 +61,11 @@
         </receiver>
         <!-- weixin end -->
 
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="5260c52156240bee00013d61" />
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="mvmap" />
+        <meta-data android:name="UMENG_APPKEY" android:value="5260c52156240bee00013d61" />
+        <meta-data android:name="UMENG_CHANNEL" android:value="mvmap" />
+        
+        <meta-data android:name="TA_APPKEY" android:value="Aqc1101244287"/> 　　
+        <meta-data android:name="InstallChannel" android:value="tencent"/>
     </application>
 
 </manifest>

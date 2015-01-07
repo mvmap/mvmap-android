@@ -1,8 +1,11 @@
 package com.mvmap.news.android.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Tweet {
+public class Tweet implements Parcelable{
 
 	/*
 	 * "view_count": 0,
@@ -81,5 +84,44 @@ public class Tweet {
 	public void setRelatedIds(String relatedIds) {
 		this.relatedIds = relatedIds;
 	}
+	
+	private Tweet(Parcel parcel){
+		tweetId = parcel.readInt();
+		categoryId = parcel.readInt();
+		viewCount = parcel.readInt();
+		dateLine = parcel.readString();
+		feedName = parcel.readString();
+		title = parcel.readString();
+		img = parcel.readString();
+		relatedIds = parcel.readString();
+	}
+	
+	
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+	@Override
+	public void writeToParcel(Parcel des, int arg1) {
+		des.writeInt(tweetId);
+		des.writeInt(categoryId);
+		des.writeInt(viewCount);
+		des.writeString(dateLine);
+		des.writeString(feedName);
+		des.writeString(title);
+		des.writeString(img);
+		des.writeString(relatedIds);
+	}
+	
+	public static final Parcelable.Creator<Tweet> CREATOR = new Parcelable.Creator<Tweet>() {
+		
+		public Tweet createFromParcel(Parcel parcel) {
+			return new Tweet(parcel);
+		};
+		
+		public Tweet[] newArray(int size) {
+			return new Tweet[size];
+		};
+	};
 	
 }
